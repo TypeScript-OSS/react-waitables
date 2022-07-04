@@ -24,9 +24,11 @@ We also demonstrate logging and observing changes and using `WaitablesConsumer` 
 
 `WaitablesConsumer` supports using different renderers depending on the overall state of the dependencies ("loaded", "loading", or "error").  In the following example, we demonstrate two of the possible state renderer options: "loading" and "loaded" (implicitly represented by the child function).
 
+[Try it Out – CodeSandbox](https://codesandbox.io/s/great-golick-h1z9vu)
+
 ```typescript
 import React from 'react';
-import { useBinding, useBindingEffect } from 'react-bindings';
+import { useBindingEffect } from 'react-bindings';
 import { useWaitableFunction, WaitablesConsumer } from 'react-waitables';
 
 export const MyComponent = () => {
@@ -62,12 +64,11 @@ export const MyComponent = () => {
   // By default, these rerenders are debounced.
   return (
     <div>
-      <span>
-        myWaitable value:&nbsp;
-        <WaitablesConsumer dependencies={{ value: myWaitable }} ifLoading={() => 'loading…'}>
-          {({ value }) => value}
-        </WaitablesConsumer>
-      </span>
+      myWaitable value:&nbsp;
+      <WaitablesConsumer dependencies={{ value: myWaitable }} ifLoading={() => 'loading…'}>
+        {({ value }) => value}
+      </WaitablesConsumer>
+      &nbsp;
       <button onClick={onUpdateClick}>Update</button>
     </div>
   );
@@ -82,6 +83,8 @@ In the following example, we use `fetch` to load data dynamically, setting the v
 
 We also create a second waitable derived from the first waitable and another binding, which we use to choose between rendering the type of the data in all caps or lowercase.
 
+[Try it Out – CodeSandbox](https://codesandbox.io/s/epic-microservice-vmvrdd)
+
 ```typescript
 import React from 'react';
 import { BindingsConsumer, useBinding } from 'react-bindings';
@@ -91,7 +94,7 @@ export const MyComponent = () => {
   const myWaitable = useWaitableFunction(
     async () => {
       try {
-        const response = await fetch('http://example.com/movies.json');
+        const response = await fetch('https://raw.githubusercontent.com/bahamas10/css-color-names/master/css-color-names.json');
         const data = await response.json();
         if (data !== undefined) {
           return { ok: true, value: data };
@@ -128,8 +131,8 @@ export const MyComponent = () => {
   //
   // The final dynamic portion is the label on the button, which changes to let users know the effect of clicking the button.
   return (
-    <div>
-      <span>
+    <>
+      <div>
         myWaitable value:&nbsp;
         <WaitablesConsumer
           dependencies={{ value: myWaitable }}
@@ -143,14 +146,18 @@ export const MyComponent = () => {
         >
           {({ value }) => JSON.stringify(value)}
         </WaitablesConsumer>
+      </div>
+      <div>
         <WaitablesConsumer dependencies={{ type: myWaitableType }}>{({ type }) => <span>&nbsp;({type})</span>}</WaitablesConsumer>
-      </span>
-      <button onClick={toggleAllCaps}>
-        <BindingsConsumer bindings={{ allCaps }}>
-          {({ allCaps }) => (allCaps ? 'Switch to Lowercase' : 'Switch to Uppercase')}
-        </BindingsConsumer>
-      </button>
-    </div>
+      </div>
+      <div>
+        <button onClick={toggleAllCaps}>
+          <BindingsConsumer bindings={{ allCaps }}>
+            {({ allCaps }) => (allCaps ? 'Switch to Lowercase' : 'Switch to Uppercase')}
+          </BindingsConsumer>
+        </button>
+      </div>
+    </>
   );
 };
 ```
