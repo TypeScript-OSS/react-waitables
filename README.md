@@ -181,7 +181,7 @@ const myWaitable = useWaitableFunction(
 
 Get creative and consider using waitables with React contexts, inside hooks, and extending them using the `addFields` option.
 
-[API Docs](https://panchain.github.io/react-waitables/)
+[API Docs](https://passfolio.github.io/react-waitables/)
 
 ## Thanks
 

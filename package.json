@@ -1,6 +1,6 @@
 {
   "name": "react-waitables",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Async data bindings for React",
   "keywords": [
     "async",
@@ -13,8 +13,8 @@
   ],
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
-  "repository": "https://github.com/Panchain/react-waitables.git",
-  "homepage": "https://panchain.github.io/react-waitables/",
+  "repository": "https://github.com/Passfolio/react-waitables.git",
+  "homepage": "https://passfolio.github.io/react-waitables/",
   "license": "MIT",
   "private": false,
   "scripts": {
@@ -34,9 +34,9 @@
     "react-dom": ">=16.9.0"
   },
   "dependencies": {
-    "client-run-queue": "^1.1.5",
+    "client-run-queue": "^1.1.7",
     "is-promise": "^4.0.0",
-    "react-bindings": "^1.2.3"
+    "react-bindings": "^1.2.4"
   },
   "devDependencies": {
     "@types/jest": "^28.1.1",
