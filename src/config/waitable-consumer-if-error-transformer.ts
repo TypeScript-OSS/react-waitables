@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 import type { ReactNode } from 'react';
 
 import type { Waitable } from '../waitable/types/waitable';

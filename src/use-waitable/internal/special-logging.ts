@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 import { getLogger, ReadonlyBinding } from 'react-bindings';
 
 export const doSpecialLoggingForLockedWaitable = ({

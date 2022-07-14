@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 const globalSpecialLoggingEnabledFor: Partial<Record<SpecialLoggingType, boolean | undefined>> = {
   'waitable-locking-warnings': false
 };
