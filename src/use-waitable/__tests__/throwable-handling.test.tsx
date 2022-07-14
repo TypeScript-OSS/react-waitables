@@ -1,3 +1,5 @@
+import { waitFor } from '@testing-library/react';
+
 import { runInDom, sleep } from '../../__test_dependency__';
 import type { WaitablePrimaryFunction } from '../types/primary-function';
 import { useWaitable } from '../use-waitable';
@@ -45,11 +47,10 @@ describe('useWaitable', () => {
         expect(waitable.error.get()).toBeUndefined();
         expect(waitable.value.get()).toBeUndefined();
 
-        await sleep(300); // Giving the waitable a chance to run
+        await waitFor(() => expect(waitablePrimaryFunc).toHaveBeenCalledTimes(1));
 
         expect(waitable.error.get()).toBeUndefined();
         expect(waitable.value.get()).toBeUndefined();
-        expect(waitablePrimaryFunc).toHaveBeenCalledTimes(1);
       });
     }));
 
@@ -65,11 +66,10 @@ describe('useWaitable', () => {
         expect(waitable.error.get()).toBeUndefined();
         expect(waitable.value.get()).toBeUndefined();
 
-        await sleep(300); // Giving the waitable a chance to run
+        await waitFor(() => expect(waitablePrimaryFunc).toHaveBeenCalledTimes(2));
 
         expect(waitable.error.get()).toBeUndefined();
         expect(waitable.value.get()).toBeUndefined();
-        expect(waitablePrimaryFunc).toHaveBeenCalledTimes(2);
       });
     }));
 });

@@ -1,3 +1,5 @@
+import { waitFor } from '@testing-library/react';
+
 import { runInDom, sleep } from '../../__test_dependency__';
 import type { WaitablePrimaryFunction } from '../types/primary-function';
 import { useWaitable } from '../use-waitable';
@@ -45,9 +47,7 @@ describe('useWaitable', () => {
       expect(waitablePrimaryFunc).toHaveBeenCalledTimes(0);
 
       onMount(async () => {
-        await sleep(300);
-
-        expect(waitable.value.get()).toBe(1);
+        await waitFor(() => expect(waitable.value.get()).toBe(1));
         expect(waitablePrimaryFunc).toHaveBeenCalledTimes(1);
       });
     }));
@@ -64,10 +64,9 @@ describe('useWaitable', () => {
         expect(waitable.error.get()).toBeUndefined();
         expect(waitable.value.get()).toBeUndefined();
 
-        await sleep(300); // Giving the waitable a chance to run
+        await waitFor(() => expect(waitable.value.get()).toBe(1));
 
         expect(waitable.error.get()).toBeUndefined();
-        expect(waitable.value.get()).toBe(1);
         expect(waitablePrimaryFunc).toHaveBeenCalledTimes(1);
       });
     }));
@@ -84,10 +83,9 @@ describe('useWaitable', () => {
         expect(waitable.error.get()).toBeUndefined();
         expect(waitable.value.get()).toBeUndefined();
 
-        await sleep(300); // Giving the waitable a chance to run
+        await waitFor(() => expect(waitable.value.get()).toBe(1));
 
         expect(waitable.error.get()).toBeUndefined();
-        expect(waitable.value.get()).toBe(1);
         expect(waitablePrimaryFunc).toHaveBeenCalledTimes(1);
       });
     }));

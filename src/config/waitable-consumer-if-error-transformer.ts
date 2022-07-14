@@ -1,12 +1,9 @@
 import type { ReactNode } from 'react';
-import type { ReadonlyBinding, SingleOrArray } from 'react-bindings';
 
 import type { Waitable } from '../waitable/types/waitable';
+import type { WaitableDependencies } from '../waitable/types/waitable-dependencies';
 
-type IfErrorTransformer = (
-  dependencies: SingleOrArray<Waitable<any> | ReadonlyBinding | undefined> | Record<string, Waitable<any> | ReadonlyBinding | undefined>,
-  node: Waitable<ReactNode>
-) => ReactNode;
+type IfErrorTransformer = (dependencies: WaitableDependencies, node: Waitable<ReactNode>) => ReactNode;
 
 let globalDefaultWaitablesConsumerIfErrorTransformer: IfErrorTransformer | undefined;
 

@@ -1,21 +1,22 @@
-import { ReactNode } from 'react';
-import type { ReadonlyBinding } from 'react-bindings';
+import type { ReactNode } from 'react';
 
-import type {
-  ExtractOptionalNamedWaitablesAndBindingValues,
-  ExtractRequiredNamedWaitablesAndBindingValues,
-  Waitable
-} from '../../../waitable/exports';
+import {
+  InferOptionalWaitableAndBindingValueTypes,
+  InferRequiredWaitableAndBindingValueTypes
+} from '../../../waitable/types/infer-waitable-and-binding-value-types';
+import type { WaitableDependencies } from '../../../waitable/types/waitable-dependencies';
 
 /** A transformer that requires all waitable values to be loaded. */
-export type WaitablesConsumerRequiredValuesTransformer<
-  NamedDependenciesT extends Record<string, Waitable<any> | ReadonlyBinding | undefined> = Record<string, never>
-> = (dependencyValues: ExtractRequiredNamedWaitablesAndBindingValues<NamedDependenciesT>, dependencies: NamedDependenciesT) => ReactNode;
+export type WaitablesConsumerRequiredValuesTransformer<DependenciesT extends WaitableDependencies = Record<string, never>> = (
+  dependencyValues: InferRequiredWaitableAndBindingValueTypes<DependenciesT>,
+  dependencies: DependenciesT
+) => ReactNode;
 
 /** A transformer that doesn't require all waitable values to be loaded. */
-export type WaitablesConsumerOptionalValuesTransformer<
-  NamedDependenciesT extends Record<string, Waitable<any> | ReadonlyBinding | undefined> = Record<string, never>
-> = (dependencyValues: ExtractOptionalNamedWaitablesAndBindingValues<NamedDependenciesT>, dependencies: NamedDependenciesT) => ReactNode;
+export type WaitablesConsumerOptionalValuesTransformer<DependenciesT extends WaitableDependencies = Record<string, never>> = (
+  dependencyValues: InferOptionalWaitableAndBindingValueTypes<DependenciesT>,
+  dependencies: DependenciesT
+) => ReactNode;
 
 /**
  * Transformers that are used depending on the state of the waitables.
@@ -23,17 +24,15 @@ export type WaitablesConsumerOptionalValuesTransformer<
  * The first applicable transformer is used, evaluated in the following order: `ifLoaded`, `ifError`, `ifLoading`, `ifErrorOrLoading`,
  * `always`
  */
-export interface WaitablesConsumerNamedTransformers<
-  NamedDependenciesT extends Record<string, Waitable<any> | ReadonlyBinding | undefined> = Record<string, never>
-> {
+export interface WaitablesConsumerNamedTransformers<DependenciesT extends WaitableDependencies = Record<string, never>> {
   /** All waitables have defined values */
-  ifLoaded?: WaitablesConsumerRequiredValuesTransformer<NamedDependenciesT>;
+  ifLoaded?: WaitablesConsumerRequiredValuesTransformer<DependenciesT>;
   /** At least one waitable has a defined error */
-  ifError?: WaitablesConsumerOptionalValuesTransformer<NamedDependenciesT>;
+  ifError?: WaitablesConsumerOptionalValuesTransformer<DependenciesT>;
   /** At least one waitable doesn't have a defined value but no waitables have defined errors */
-  ifLoading?: WaitablesConsumerOptionalValuesTransformer<NamedDependenciesT>;
+  ifLoading?: WaitablesConsumerOptionalValuesTransformer<DependenciesT>;
   /** At least one waitable doesn't have a defined value or at least one waitable has a defined error */
-  ifErrorOrLoading?: WaitablesConsumerOptionalValuesTransformer<NamedDependenciesT>;
+  ifErrorOrLoading?: WaitablesConsumerOptionalValuesTransformer<DependenciesT>;
   /** Always applicable */
-  always?: WaitablesConsumerOptionalValuesTransformer<NamedDependenciesT>;
+  always?: WaitablesConsumerOptionalValuesTransformer<DependenciesT>;
 }

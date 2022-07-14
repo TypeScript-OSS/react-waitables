@@ -1,5 +1,5 @@
 import type { DependencyList } from 'react';
-import type { EmptyObject, LimiterOptions, ReadonlyBinding, SingleOrArray } from 'react-bindings';
+import type { BindingArrayDependencies, EmptyObject, LimiterOptions, ReadonlyBinding } from 'react-bindings';
 
 import type { TypeOrPromisedType } from '../../resolveable/types';
 import type { ResetType } from '../../waitable/types/reset';
@@ -61,17 +61,17 @@ export interface UseWaitableArgs<SuccessT, FailureT = any, ExtraFieldsT = EmptyO
    * If specified and the values of any of the specified bindings are not truthy, the waitable is locked and the primary function cannot be
    * run yet
    */
-  lockedUntil?: SingleOrArray<ReadonlyBinding | undefined>;
+  lockedUntil?: ReadonlyBinding | BindingArrayDependencies;
   /**
    * If specified and the values of any of the specified bindings are truthy, the waitable is locked and the primary function cannot be run
    * yet
    */
-  lockedWhile?: SingleOrArray<ReadonlyBinding | undefined>;
+  lockedWhile?: ReadonlyBinding | BindingArrayDependencies;
 
   /** If any of these bindings change, the waitable will be hard reset */
-  hardResetBindings?: SingleOrArray<ReadonlyBinding | undefined>;
+  hardResetBindings?: ReadonlyBinding | BindingArrayDependencies;
   /** If any of these bindings change, the waitable will be soft reset */
-  softResetBindings?: SingleOrArray<ReadonlyBinding | undefined>;
+  softResetBindings?: ReadonlyBinding | BindingArrayDependencies;
 
   /**
    * This can be used to generate a default value, which will be used to initialize the value and whenever this waitable is hard reset.  You

@@ -1,6 +1,7 @@
+import { waitFor } from '@testing-library/react';
 import { useBinding, useConstBinding } from 'react-bindings';
 
-import { runInDom, sleep } from '../../__test_dependency__';
+import { runInDom } from '../../__test_dependency__';
 import type { WaitablePrimaryFunction } from '../types/primary-function';
 import { useWaitable } from '../use-waitable';
 
@@ -18,11 +19,10 @@ describe('useWaitable', () => {
           expect(waitable.error.get()).toBeUndefined();
           expect(waitable.value.get()).toBeUndefined();
 
-          await sleep(300); // Giving the waitable a chance to run (though it shouldn't)
+          await expect(waitFor(() => expect(waitablePrimaryFunc).toHaveBeenCalled())).rejects.toThrow();
 
           expect(waitable.error.get()).toBeUndefined();
           expect(waitable.value.get()).toBeUndefined();
-          expect(waitablePrimaryFunc).not.toHaveBeenCalled();
         });
       }));
 
@@ -38,19 +38,17 @@ describe('useWaitable', () => {
           expect(waitable.error.get()).toBeUndefined();
           expect(waitable.value.get()).toBeUndefined();
 
-          await sleep(300); // Giving the waitable a chance to run (though it shouldn't)
+          await expect(waitFor(() => expect(waitablePrimaryFunc).toHaveBeenCalled())).rejects.toThrow();
 
           expect(waitable.error.get()).toBeUndefined();
           expect(waitable.value.get()).toBeUndefined();
-          expect(waitablePrimaryFunc).not.toHaveBeenCalled();
 
           lock.set(false);
 
-          await sleep(300); // Giving the waitable a chance to run
+          await waitFor(() => expect(waitablePrimaryFunc).toHaveBeenCalledTimes(1));
 
           expect(waitable.error.get()).toBeUndefined();
           expect(waitable.value.get()).toBe(1);
-          expect(waitablePrimaryFunc).toHaveBeenCalledTimes(1);
         });
       }));
 
@@ -67,27 +65,24 @@ describe('useWaitable', () => {
           expect(waitable.error.get()).toBeUndefined();
           expect(waitable.value.get()).toBeUndefined();
 
-          await sleep(300); // Giving the waitable a chance to run (though it shouldn't)
+          await expect(waitFor(() => expect(waitablePrimaryFunc).toHaveBeenCalled())).rejects.toThrow();
 
           expect(waitable.error.get()).toBeUndefined();
           expect(waitable.value.get()).toBeUndefined();
-          expect(waitablePrimaryFunc).not.toHaveBeenCalled();
 
           lock1.set(false);
 
-          await sleep(300); // Giving the waitable a chance to run (though it shouldn't)
+          await expect(waitFor(() => expect(waitablePrimaryFunc).toHaveBeenCalled())).rejects.toThrow();
 
           expect(waitable.error.get()).toBeUndefined();
           expect(waitable.value.get()).toBeUndefined();
-          expect(waitablePrimaryFunc).not.toHaveBeenCalled();
 
           lock2.set(false);
 
-          await sleep(300); // Giving the waitable a chance to run
+          await waitFor(() => expect(waitablePrimaryFunc).toHaveBeenCalledTimes(1));
 
           expect(waitable.error.get()).toBeUndefined();
           expect(waitable.value.get()).toBe(1);
-          expect(waitablePrimaryFunc).toHaveBeenCalledTimes(1);
         });
       }));
   });
@@ -105,11 +100,10 @@ describe('useWaitable', () => {
           expect(waitable.error.get()).toBeUndefined();
           expect(waitable.value.get()).toBeUndefined();
 
-          await sleep(300); // Giving the waitable a chance to run (though it shouldn't)
+          await expect(waitFor(() => expect(waitablePrimaryFunc).toHaveBeenCalled())).rejects.toThrow();
 
           expect(waitable.error.get()).toBeUndefined();
           expect(waitable.value.get()).toBeUndefined();
-          expect(waitablePrimaryFunc).not.toHaveBeenCalled();
         });
       }));
 
@@ -125,19 +119,17 @@ describe('useWaitable', () => {
           expect(waitable.error.get()).toBeUndefined();
           expect(waitable.value.get()).toBeUndefined();
 
-          await sleep(300); // Giving the waitable a chance to run (though it shouldn't)
+          await expect(waitFor(() => expect(waitablePrimaryFunc).toHaveBeenCalled())).rejects.toThrow();
 
           expect(waitable.error.get()).toBeUndefined();
           expect(waitable.value.get()).toBeUndefined();
-          expect(waitablePrimaryFunc).not.toHaveBeenCalled();
 
           unlock.set(true);
 
-          await sleep(300); // Giving the waitable a chance to run
+          await waitFor(() => expect(waitablePrimaryFunc).toHaveBeenCalledTimes(1));
 
           expect(waitable.error.get()).toBeUndefined();
           expect(waitable.value.get()).toBe(1);
-          expect(waitablePrimaryFunc).toHaveBeenCalledTimes(1);
         });
       }));
 
@@ -154,27 +146,24 @@ describe('useWaitable', () => {
           expect(waitable.error.get()).toBeUndefined();
           expect(waitable.value.get()).toBeUndefined();
 
-          await sleep(300); // Giving the waitable a chance to run (though it shouldn't)
+          await expect(waitFor(() => expect(waitablePrimaryFunc).toHaveBeenCalled())).rejects.toThrow();
 
           expect(waitable.error.get()).toBeUndefined();
           expect(waitable.value.get()).toBeUndefined();
-          expect(waitablePrimaryFunc).not.toHaveBeenCalled();
 
           unlock1.set(true);
 
-          await sleep(300); // Giving the waitable a chance to run (though it shouldn't)
+          await expect(waitFor(() => expect(waitablePrimaryFunc).toHaveBeenCalled())).rejects.toThrow();
 
           expect(waitable.error.get()).toBeUndefined();
           expect(waitable.value.get()).toBeUndefined();
-          expect(waitablePrimaryFunc).not.toHaveBeenCalled();
 
           unlock2.set(true);
 
-          await sleep(300); // Giving the waitable a chance to run
+          await waitFor(() => expect(waitablePrimaryFunc).toHaveBeenCalledTimes(1));
 
           expect(waitable.error.get()).toBeUndefined();
           expect(waitable.value.get()).toBe(1);
-          expect(waitablePrimaryFunc).toHaveBeenCalledTimes(1);
         });
       }));
   });
@@ -193,27 +182,24 @@ describe('useWaitable', () => {
           expect(waitable.error.get()).toBeUndefined();
           expect(waitable.value.get()).toBeUndefined();
 
-          await sleep(300); // Giving the waitable a chance to run (though it shouldn't)
+          await expect(waitFor(() => expect(waitablePrimaryFunc).toHaveBeenCalled())).rejects.toThrow();
 
           expect(waitable.error.get()).toBeUndefined();
           expect(waitable.value.get()).toBeUndefined();
-          expect(waitablePrimaryFunc).not.toHaveBeenCalled();
 
           lock.set(false);
 
-          await sleep(300); // Giving the waitable a chance to run (though it shouldn't)
+          await expect(waitFor(() => expect(waitablePrimaryFunc).toHaveBeenCalled())).rejects.toThrow();
 
           expect(waitable.error.get()).toBeUndefined();
           expect(waitable.value.get()).toBeUndefined();
-          expect(waitablePrimaryFunc).not.toHaveBeenCalled();
 
           unlock.set(true);
 
-          await sleep(300); // Giving the waitable a chance to run
+          await waitFor(() => expect(waitablePrimaryFunc).toHaveBeenCalledTimes(1));
 
           expect(waitable.error.get()).toBeUndefined();
           expect(waitable.value.get()).toBe(1);
-          expect(waitablePrimaryFunc).toHaveBeenCalledTimes(1);
         });
       }));
   });

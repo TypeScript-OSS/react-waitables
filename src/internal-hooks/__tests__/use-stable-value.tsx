@@ -1,7 +1,8 @@
+import { waitFor } from '@testing-library/react';
 import React, { ComponentType } from 'react';
 import { BindingsConsumer, useBinding } from 'react-bindings';
 
-import { runInDom, sleep } from '../../__test_dependency__';
+import { runInDom } from '../../__test_dependency__';
 import { useStableValue } from '../use-stable-value';
 
 describe('useStableValue', () => {
@@ -28,18 +29,14 @@ describe('useStableValue', () => {
         expect(stabilized).toMatchObject({ value: 0, somethingElse: 3 });
 
         value.set(0);
+        await waitFor(() => expect(MyComponent).toHaveBeenCalledTimes(2));
 
-        await sleep(300); // giving time to render
-
-        expect(MyComponent).toHaveBeenCalledTimes(2);
         expect(stabilized).toBe(firstStabilized);
         expect(stabilized).toMatchObject({ value: 0, somethingElse: 3 });
 
         value.set(1);
+        await waitFor(() => expect(MyComponent).toHaveBeenCalledTimes(3));
 
-        await sleep(300); // giving time to render
-
-        expect(MyComponent).toHaveBeenCalledTimes(3);
         expect(stabilized).not.toBe(firstStabilized);
         expect(stabilized).toMatchObject({ value: 1, somethingElse: 3 });
       });

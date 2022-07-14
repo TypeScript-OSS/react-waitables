@@ -1,4 +1,4 @@
-export * from './extract-named-waitables-and-binding-values';
+export * from './infer-named-waitables-and-binding-value-types';
 export * from './inference';
 export * from './reset';
 export * from './wait';

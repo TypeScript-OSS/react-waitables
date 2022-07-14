@@ -1,3 +1,4 @@
+import { waitFor } from '@testing-library/react';
 import React from 'react';
 import { useBinding } from 'react-bindings';
 
@@ -20,11 +21,8 @@ describe('WaitablesConsumer', () => {
       const c = useDerivedWaitable({ a, b }, ({ a, b }) => a + b, { id: 'c' });
 
       onMount(async (rootElement) => {
-        expect(rootElement.innerHTML).toBe('');
-
-        await sleep(300);
-
-        expect(rootElement.innerHTML).toBe('<div><span>1</span>+<span>2</span>=<span>3</span></div>');
+        expect(rootElement.innerHTML).toBe('<div></div>');
+        await waitFor(() => expect(rootElement.innerHTML).toBe('<div><div><span>1</span>+<span>2</span>=<span>3</span></div></div>'));
       });
 
       return (

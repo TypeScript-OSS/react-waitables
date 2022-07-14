@@ -1,3 +1,4 @@
+import { waitFor } from '@testing-library/react';
 import React, { ComponentType } from 'react';
 import { BindingsConsumer, useBinding } from 'react-bindings';
 
@@ -28,19 +29,17 @@ describe('useWaitable', () => {
         expect(waitable?.error.get()).toBeUndefined();
         expect(waitable?.value.get()).toBeUndefined();
 
-        await sleep(300); // Giving the waitable a chance to run
+        await waitFor(() => expect(waitable?.value.get()).toBe(1));
 
         expect(waitable?.error.get()).toBeUndefined();
-        expect(waitable?.value.get()).toBe(1);
-        expect(waitablePrimaryFunc).toHaveBeenCalledTimes(1);
         expect(MyComponent).toHaveBeenCalledTimes(1);
+        expect(waitablePrimaryFunc).toHaveBeenCalledTimes(1);
 
         refresh.set(1);
 
-        await sleep(300);
+        await expect(waitFor(() => expect(waitable?.value.get()).not.toBe(1))).rejects.toThrow();
 
         expect(waitable?.error.get()).toBeUndefined();
-        expect(waitable?.value.get()).toBe(1);
         expect(waitablePrimaryFunc).toHaveBeenCalledTimes(1);
         expect(MyComponent).toHaveBeenCalledTimes(2);
       });
@@ -69,23 +68,21 @@ describe('useWaitable', () => {
         expect(waitable?.error.get()).toBeUndefined();
         expect(waitable?.value.get()).toBeUndefined();
 
-        await sleep(300); // Giving the waitable a chance to run
+        await waitFor(() => expect(waitable?.value.get()).toBe(1));
 
         expect(waitable?.error.get()).toBeUndefined();
-        expect(waitable?.value.get()).toBe(1);
-        expect(waitablePrimaryFunc).toHaveBeenCalledTimes(1);
         expect(MyComponent).toHaveBeenCalledTimes(1);
+        expect(waitablePrimaryFunc).toHaveBeenCalledTimes(1);
 
         refresh.set(1);
 
-        await sleep(300);
+        await expect(waitFor(() => expect(waitable?.value.get()).not.toBe(1))).rejects.toThrow();
 
         expect(waitable?.error.get()).toBeUndefined();
-        expect(waitable?.value.get()).toBe(1);
         expect(waitablePrimaryFunc).toHaveBeenCalledTimes(1);
         expect(MyComponent).toHaveBeenCalledTimes(2);
       });
 
-      return <BindingsConsumer bindings={refresh}>{({ refresh: value }) => <MyComponent value={value} />}</BindingsConsumer>;
+      return <BindingsConsumer bindings={{ refresh }}>{({ refresh: value }) => <MyComponent value={value} />}</BindingsConsumer>;
     }));
 });

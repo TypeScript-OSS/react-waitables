@@ -4,7 +4,7 @@ import type { InferWaitableSuccessType } from './inference';
 import type { Waitable } from './waitable';
 
 /** Extracts the value types from waitables and bindings */
-export type ExtractRequiredNamedWaitablesAndBindingValues<
+export type InferRequiredNamedWaitablesAndBindingValueTypes<
   NamedDependenciesT extends Record<string, Waitable<any> | ReadonlyBinding | undefined>
 > = {
   [KeyT in keyof NamedDependenciesT]: NamedDependenciesT[KeyT] extends Waitable<any>
@@ -17,7 +17,7 @@ export type ExtractRequiredNamedWaitablesAndBindingValues<
 };
 
 /** Extracts the value types from waitables and bindings */
-export type ExtractOptionalNamedWaitablesAndBindingValues<
+export type InferOptionalNamedWaitablesAndBindingValueTypes<
   NamedDependenciesT extends Record<string, Waitable<any> | ReadonlyBinding | undefined>
 > = {
   [KeyT in keyof NamedDependenciesT]: NamedDependenciesT[KeyT] extends Waitable<any>

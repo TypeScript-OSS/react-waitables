@@ -4,21 +4,22 @@ import { EmptyObject, isBinding, ReadonlyBinding, SingleOrArray } from 'react-bi
 import { useCallbackRef } from '../../internal-hooks/use-callback-ref';
 import { useStableValue } from '../../internal-hooks/use-stable-value';
 import { concatArrays, normalizeAsArray, normalizeAsOptionalArray } from '../../internal-utils/array-like';
+import { extractOptionalWaitableDependencyValues } from '../../internal-utils/extract-waitable-dependency-values';
 import { getTypedKeys } from '../../internal-utils/get-typed-keys';
 import { makeValueThenDo } from '../../internal-utils/make-value-then-do';
-import { WaitablePrimaryFunction } from '../../use-waitable/exports';
 import type { UseWaitableArgs } from '../../use-waitable/types/args';
+import type { WaitablePrimaryFunction } from '../../use-waitable/types/primary-function';
 import { useWaitable } from '../../use-waitable/use-waitable';
 import type {
-  ExtractOptionalNamedWaitablesAndBindingValues,
-  ExtractRequiredNamedWaitablesAndBindingValues
-} from '../../waitable/types/extract-named-waitables-and-binding-values';
+  InferOptionalWaitableAndBindingValueTypes,
+  InferRequiredWaitableAndBindingValueTypes
+} from '../../waitable/types/infer-waitable-and-binding-value-types';
 import type { Waitable } from '../../waitable/types/waitable';
+import type { WaitableDependencies } from '../../waitable/types/waitable-dependencies';
 import { isWaitable } from '../../waitable/utils';
 import type { UseDerivedWaitableNamedTransformers, UseDerivedWaitableRequiredValuesTransformer } from './types/transformers';
 
-const emptyNamedDependencies = Object.freeze({} as EmptyObject);
-const emptyNamedDependencyValues: Readonly<EmptyObject> = Object.freeze({});
+const emptyDependencies = Object.freeze({} as EmptyObject);
 
 const emptyHardResetBindings = Object.freeze([]) as unknown as Array<ReadonlyBinding | undefined>;
 const emptyLockedWhile = Object.freeze([]) as unknown as Array<ReadonlyBinding | undefined>;
@@ -55,13 +56,13 @@ const emptyLockedWhile = Object.freeze([]) as unknown as Array<ReadonlyBinding |
 export const useDerivedWaitable = <
   SuccessT,
   FailureT,
-  NamedDependenciesT extends Record<string, Waitable<any> | ReadonlyBinding | undefined> = Record<string, never>,
+  DependenciesT extends WaitableDependencies = Record<string, never>,
   ExtraFieldsT = EmptyObject
 >(
-  dependencies: SingleOrArray<Waitable<any> | ReadonlyBinding | undefined> | NamedDependenciesT,
+  dependencies: DependenciesT | undefined,
   transformers: SingleOrArray<
-    | UseDerivedWaitableRequiredValuesTransformer<SuccessT, FailureT, NamedDependenciesT>
-    | UseDerivedWaitableNamedTransformers<SuccessT, FailureT, NamedDependenciesT>
+    | UseDerivedWaitableRequiredValuesTransformer<SuccessT, FailureT, DependenciesT>
+    | UseDerivedWaitableNamedTransformers<SuccessT, FailureT, DependenciesT>
   >,
   args: UseWaitableArgs<SuccessT, FailureT, ExtraFieldsT>
 ) => {
@@ -72,7 +73,7 @@ export const useDerivedWaitable = <
   const namedDependencies = isNonNamedDependencies ? undefined : dependencies;
   const namedDependencyKeys = namedDependencies !== undefined ? getTypedKeys(namedDependencies) : undefined;
   const stableAllDependencies = useStableValue(
-    isNonNamedDependencies ? normalizeAsArray(nonNamedDependencies) : Object.values(namedDependencies ?? emptyNamedDependencies)
+    isNonNamedDependencies ? normalizeAsArray(nonNamedDependencies) : Object.values(namedDependencies ?? emptyDependencies)
   );
   const stableAllWaitables = useMemo(
     () => stableAllDependencies.filter((dep) => isWaitable(dep)) as Waitable<any>[],
@@ -157,64 +158,32 @@ export const useDerivedWaitable = <
    * - Otherwise, the overall state is `'loaded'`
    */
   const evaluate: WaitablePrimaryFunction<SuccessT, FailureT> = useCallbackRef(({ setSuccess, setFailure }) => {
-    if (namedDependencyKeys === undefined || namedDependencies === undefined) {
+    const { allWaitablesAreLoaded, anyWaitablesHadErrors, lastError, values } = extractOptionalWaitableDependencyValues<
+      DependenciesT,
+      FailureT
+    >({
+      dependencies,
+      namedDependencyKeys
+    });
+
+    if (allWaitablesAreLoaded) {
       // Loaded
       return makeValueThenDo<SuccessT | undefined>(
         () =>
           getLoadedTransformer()?.(
-            emptyNamedDependencyValues as ExtractRequiredNamedWaitablesAndBindingValues<NamedDependenciesT>,
-            namedDependencies ?? (emptyNamedDependencies as NamedDependenciesT),
+            values as InferRequiredWaitableAndBindingValueTypes<DependenciesT>,
+            dependencies ?? (emptyDependencies as DependenciesT),
             setFailure
           ),
         setSuccess
       );
-    }
-
-    const namedValues: Partial<ExtractOptionalNamedWaitablesAndBindingValues<NamedDependenciesT>> = {};
-    let areAllWaitablesHavingDefinedValues = true;
-    let lastError: FailureT | undefined = undefined;
-
-    for (const key of namedDependencyKeys) {
-      const dep = namedDependencies[key];
-      if (isWaitable(dep)) {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-        const value = dep.value.get();
-        if (value === undefined) {
-          areAllWaitablesHavingDefinedValues = false;
-
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-          const error = dep.error.get();
-          if (error !== undefined) {
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-            lastError = error;
-          }
-        }
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-        namedValues[key] = value;
-      } else if (isBinding(dep)) {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-        namedValues[key] = dep.get();
-      }
-    }
-
-    if (areAllWaitablesHavingDefinedValues) {
-      // Loaded
-      return makeValueThenDo<SuccessT | undefined>(
-        () =>
-          getLoadedTransformer()?.(
-            namedValues as ExtractRequiredNamedWaitablesAndBindingValues<NamedDependenciesT>,
-            namedDependencies ?? (emptyNamedDependencies as NamedDependenciesT),
-            setFailure
-          ),
-        setSuccess
-      );
-    } else if (lastError !== undefined) {
+    } else if (anyWaitablesHadErrors) {
       // Error
       return makeValueThenDo(
         () =>
           getErrorTransformer()?.(
-            namedValues as ExtractOptionalNamedWaitablesAndBindingValues<NamedDependenciesT>,
-            namedDependencies ?? (emptyNamedDependencies as NamedDependenciesT),
+            values as InferOptionalWaitableAndBindingValueTypes<DependenciesT>,
+            dependencies ?? (emptyDependencies as DependenciesT),
             setFailure
           ),
         (value) => {
@@ -230,8 +199,8 @@ export const useDerivedWaitable = <
       return makeValueThenDo<SuccessT | undefined>(
         () =>
           getLoadingTransformer()?.(
-            namedValues as ExtractOptionalNamedWaitablesAndBindingValues<NamedDependenciesT>,
-            namedDependencies ?? (emptyNamedDependencies as NamedDependenciesT),
+            values as InferOptionalWaitableAndBindingValueTypes<DependenciesT>,
+            dependencies ?? (emptyDependencies as DependenciesT),
             setFailure
           ),
         setSuccess

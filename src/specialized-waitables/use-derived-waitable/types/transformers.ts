@@ -1,20 +1,18 @@
-import type { ReadonlyBinding } from 'react-bindings';
-
 import type { TypeOrPromisedType } from '../../../resolveable/types';
 import type {
-  ExtractOptionalNamedWaitablesAndBindingValues,
-  ExtractRequiredNamedWaitablesAndBindingValues
-} from '../../../waitable/types/extract-named-waitables-and-binding-values';
-import type { Waitable } from '../../../waitable/types/waitable';
+  InferOptionalWaitableAndBindingValueTypes,
+  InferRequiredWaitableAndBindingValueTypes
+} from '../../../waitable/types/infer-waitable-and-binding-value-types';
+import type { WaitableDependencies } from '../../../waitable/types/waitable-dependencies';
 
 /** A transformer that requires all waitable values to be loaded. */
 export type UseDerivedWaitableRequiredValuesTransformer<
   SuccessT,
   FailureT,
-  NamedDependenciesT extends Record<string, Waitable<any> | ReadonlyBinding | undefined> = Record<string, never>
+  DependenciesT extends WaitableDependencies = Record<string, never>
 > = (
-  dependencyValues: ExtractRequiredNamedWaitablesAndBindingValues<NamedDependenciesT>,
-  dependencies: NamedDependenciesT,
+  dependencyValues: InferRequiredWaitableAndBindingValueTypes<DependenciesT>,
+  dependencies: DependenciesT,
   setFailure: (failure: FailureT) => void
 ) => TypeOrPromisedType<SuccessT | undefined>;
 
@@ -22,10 +20,10 @@ export type UseDerivedWaitableRequiredValuesTransformer<
 export type UseDerivedWaitableOptionalValuesTransformer<
   SuccessT,
   FailureT,
-  NamedDependenciesT extends Record<string, Waitable<any> | ReadonlyBinding | undefined> = Record<string, never>
+  DependenciesT extends WaitableDependencies = Record<string, never>
 > = (
-  dependencyValues: ExtractOptionalNamedWaitablesAndBindingValues<NamedDependenciesT>,
-  dependencies: NamedDependenciesT,
+  dependencyValues: InferOptionalWaitableAndBindingValueTypes<DependenciesT>,
+  dependencies: DependenciesT,
   setFailure: (failure: FailureT) => void
 ) => TypeOrPromisedType<SuccessT | undefined>;
 
@@ -38,11 +36,11 @@ export type UseDerivedWaitableOptionalValuesTransformer<
 export interface UseDerivedWaitableNamedTransformers<
   SuccessT,
   FailureT,
-  NamedDependenciesT extends Record<string, Waitable<any> | ReadonlyBinding | undefined> = Record<string, never>
+  DependenciesT extends WaitableDependencies = Record<string, never>
 > {
-  ifLoaded?: UseDerivedWaitableRequiredValuesTransformer<SuccessT, FailureT, NamedDependenciesT>;
-  ifError?: UseDerivedWaitableOptionalValuesTransformer<SuccessT, FailureT, NamedDependenciesT>;
-  ifLoading?: UseDerivedWaitableOptionalValuesTransformer<SuccessT, FailureT, NamedDependenciesT>;
-  ifErrorOrLoading?: UseDerivedWaitableOptionalValuesTransformer<SuccessT, FailureT, NamedDependenciesT>;
-  always?: UseDerivedWaitableOptionalValuesTransformer<SuccessT, FailureT, NamedDependenciesT>;
+  ifLoaded?: UseDerivedWaitableRequiredValuesTransformer<SuccessT, FailureT, DependenciesT>;
+  ifError?: UseDerivedWaitableOptionalValuesTransformer<SuccessT, FailureT, DependenciesT>;
+  ifLoading?: UseDerivedWaitableOptionalValuesTransformer<SuccessT, FailureT, DependenciesT>;
+  ifErrorOrLoading?: UseDerivedWaitableOptionalValuesTransformer<SuccessT, FailureT, DependenciesT>;
+  always?: UseDerivedWaitableOptionalValuesTransformer<SuccessT, FailureT, DependenciesT>;
 }

@@ -1,11 +1,10 @@
-import type { LimiterOptions, ReadonlyBinding, SingleOrArray } from 'react-bindings';
+import type { LimiterOptions } from 'react-bindings';
 
-import type { Waitable } from '../../../waitable/types/waitable';
+import type { WaitableDependencies } from '../../../waitable/types/waitable-dependencies';
 import type { WaitablesConsumerNamedTransformers } from './transformers';
 
-export type WaitablesConsumerProps<NamedDependenciesT extends Record<string, Waitable<any> | ReadonlyBinding | undefined>> =
-  LimiterOptions &
-    WaitablesConsumerNamedTransformers<NamedDependenciesT> & {
-      id?: string;
-      dependencies: SingleOrArray<Waitable<any> | ReadonlyBinding | undefined> | NamedDependenciesT;
-    };
+export type WaitablesConsumerProps<DependenciesT extends WaitableDependencies = Record<string, never>> = LimiterOptions &
+  WaitablesConsumerNamedTransformers<DependenciesT> & {
+    id?: string;
+    dependencies?: DependenciesT;
+  };

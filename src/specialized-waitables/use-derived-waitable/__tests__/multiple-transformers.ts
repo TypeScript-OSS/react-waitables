@@ -1,3 +1,4 @@
+import { waitFor } from '@testing-library/react';
 import { useBinding } from 'react-bindings';
 
 import { runInDom, sleep } from '../../../__test_dependency__';
@@ -20,9 +21,7 @@ describe('useDerivedWaitable', () => {
       expect(c.value.get()).toBe(99);
 
       onMount(async () => {
-        await sleep(300); // Giving the waitables a chance to run
-
-        expect(c.value.get()).toBe(3);
+        await waitFor(() => expect(c.value.get()).toBe(3));
       });
     }));
 
@@ -41,9 +40,7 @@ describe('useDerivedWaitable', () => {
       expect(c.value.get()).toBe(99);
 
       onMount(async () => {
-        await sleep(300); // Giving the waitables a chance to run
-
-        expect(c.value.get()).toBe(3);
+        await waitFor(() => expect(c.value.get()).toBe(3));
       });
     }));
 });

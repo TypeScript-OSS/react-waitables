@@ -1,3 +1,4 @@
+import { waitFor } from '@testing-library/react';
 import { useBinding } from 'react-bindings';
 
 import { runInDom, sleep } from '../../__test_dependency__';
@@ -30,6 +31,7 @@ describe('useWaitable', () => {
           echo.set(2);
 
           expect(onReset).toHaveBeenCalledTimes(1);
+          expect(onReset).toHaveBeenCalledWith('hard');
           expect(waitable.error.get()).toBeUndefined();
           expect(waitable.value.get()).toBeUndefined();
           expect(waitablePrimaryFunc).toHaveBeenCalledTimes(1);
@@ -69,14 +71,14 @@ describe('useWaitable', () => {
           b.set(3);
 
           expect(onReset).toHaveBeenCalledTimes(2);
+          expect(onReset).toHaveBeenCalledWith('hard');
           expect(waitable.error.get()).toBeUndefined();
           expect(waitable.value.get()).toBeUndefined();
           expect(waitablePrimaryFunc).toHaveBeenCalledTimes(1);
 
-          await sleep(300); // Giving the waitable a chance to run
+          await waitFor(() => expect(waitable.value.get()).toBe(5));
 
           expect(waitable.error.get()).toBeUndefined();
-          expect(waitable.value.get()).toBe(5);
           expect(waitablePrimaryFunc).toHaveBeenCalledTimes(2);
         });
       }));
@@ -104,6 +106,7 @@ describe('useWaitable', () => {
           echo.set(2);
 
           expect(onReset).toHaveBeenCalledTimes(1);
+          expect(onReset).toHaveBeenCalledWith('soft');
           expect(waitable.error.get()).toBeUndefined();
           expect(waitable.value.get()).toBe(1);
           expect(waitablePrimaryFunc).toHaveBeenCalledTimes(1);
@@ -140,13 +143,12 @@ describe('useWaitable', () => {
           echo.set(2);
 
           expect(onReset).toHaveBeenCalledTimes(1);
+          expect(onReset).toHaveBeenCalledWith('hard');
           expect(waitable.error.get()).toBeUndefined();
           expect(waitable.value.get()).toBe(2);
           expect(waitablePrimaryFunc).toHaveBeenCalledTimes(2);
 
-          await sleep(300); // Giving the waitable a chance to run
-
-          expect(waitablePrimaryFunc).toHaveBeenCalledTimes(2);
+          await expect(waitFor(() => expect(waitablePrimaryFunc).not.toHaveBeenCalledTimes(2))).rejects.toThrow();
         });
       }));
 
@@ -182,15 +184,15 @@ describe('useWaitable', () => {
           b.set(3);
 
           expect(onReset).toHaveBeenCalledTimes(2);
+          expect(onReset).toHaveBeenCalledWith('hard');
           expect(waitable.error.get()).toBeUndefined();
           expect(waitable.value.get()).toBeUndefined();
           expect(waitablePrimaryFunc).toHaveBeenCalledTimes(3);
 
-          await sleep(300); // Giving the waitable a chance to run
+          await expect(waitFor(() => expect(waitablePrimaryFunc).not.toHaveBeenCalledTimes(3))).rejects.toThrow();
 
           expect(waitable.error.get()).toBeUndefined();
           expect(waitable.value.get()).toBe(5);
-          expect(waitablePrimaryFunc).toHaveBeenCalledTimes(3);
         });
       }));
 
@@ -216,6 +218,7 @@ describe('useWaitable', () => {
           echo.set(2);
 
           expect(onReset).toHaveBeenCalledTimes(1);
+          expect(onReset).toHaveBeenCalledWith('soft');
           expect(waitable.error.get()).toBeUndefined();
           expect(waitable.value.get()).toBe(1);
           expect(waitablePrimaryFunc).toHaveBeenCalledTimes(1);
@@ -224,6 +227,76 @@ describe('useWaitable', () => {
 
           expect(waitable.error.get()).toBeUndefined();
           expect(waitable.value.get()).toBe(2);
+          expect(waitablePrimaryFunc).toHaveBeenCalledTimes(2);
+        });
+      }));
+
+    it('manually hard reset waitables should be cleared and then resolved after being given enough time to run', () =>
+      runInDom(({ onMount }) => {
+        const waitablePrimaryFunc: WaitablePrimaryFunction<number> = jest.fn(({ setSuccess }) => {
+          setSuccess(1);
+        });
+        const onReset: UseWaitableOnResetCallback = jest.fn();
+        const waitable = useWaitable<number>(waitablePrimaryFunc, { id: 'test', onReset });
+
+        onMount(async () => {
+          expect(waitable.error.get()).toBeUndefined();
+          expect(waitable.value.get()).toBeUndefined();
+
+          await sleep(50); // Giving the waitable a chance to run
+
+          expect(onReset).not.toHaveBeenCalled();
+          expect(waitable.error.get()).toBeUndefined();
+          expect(waitable.value.get()).toBe(1);
+          expect(waitablePrimaryFunc).toHaveBeenCalledTimes(1);
+
+          waitable.reset('hard');
+
+          expect(onReset).toHaveBeenCalledTimes(1);
+          expect(onReset).toHaveBeenCalledWith('hard');
+          expect(waitable.error.get()).toBeUndefined();
+          expect(waitable.value.get()).toBeUndefined();
+          expect(waitablePrimaryFunc).toHaveBeenCalledTimes(1);
+
+          await sleep(50); // Giving the waitable a chance to run
+
+          expect(waitable.error.get()).toBeUndefined();
+          expect(waitable.value.get()).toBe(1);
+          expect(waitablePrimaryFunc).toHaveBeenCalledTimes(2);
+        });
+      }));
+
+    it('manually soft reset waitables should be cleared and then resolved after being given enough time to run', () =>
+      runInDom(({ onMount }) => {
+        const waitablePrimaryFunc: WaitablePrimaryFunction<number> = jest.fn(({ setSuccess }) => {
+          setSuccess(1);
+        });
+        const onReset: UseWaitableOnResetCallback = jest.fn();
+        const waitable = useWaitable<number>(waitablePrimaryFunc, { id: 'test', onReset });
+
+        onMount(async () => {
+          expect(waitable.error.get()).toBeUndefined();
+          expect(waitable.value.get()).toBeUndefined();
+
+          await sleep(50); // Giving the waitable a chance to run
+
+          expect(onReset).not.toHaveBeenCalled();
+          expect(waitable.error.get()).toBeUndefined();
+          expect(waitable.value.get()).toBe(1);
+          expect(waitablePrimaryFunc).toHaveBeenCalledTimes(1);
+
+          waitable.reset('soft');
+
+          expect(onReset).toHaveBeenCalledTimes(1);
+          expect(onReset).toHaveBeenCalledWith('soft');
+          expect(waitable.error.get()).toBeUndefined();
+          expect(waitable.value.get()).toBe(1);
+          expect(waitablePrimaryFunc).toHaveBeenCalledTimes(1);
+
+          await sleep(50); // Giving the waitable a chance to run
+
+          expect(waitable.error.get()).toBeUndefined();
+          expect(waitable.value.get()).toBe(1);
           expect(waitablePrimaryFunc).toHaveBeenCalledTimes(2);
         });
       }));
