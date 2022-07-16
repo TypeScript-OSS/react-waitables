@@ -13,7 +13,8 @@ export type UseDerivedWaitableRequiredValuesTransformer<
 > = (
   dependencyValues: InferRequiredWaitableAndBindingValueTypes<DependenciesT>,
   dependencies: DependenciesT,
-  setFailure: (failure: FailureT) => void
+  setFailure: (failure: FailureT) => void,
+  wasReset: () => boolean
 ) => TypeOrPromisedType<SuccessT | undefined>;
 
 /** A transformer that doesn't require all waitable values to be loaded. */
@@ -24,7 +25,8 @@ export type UseDerivedWaitableOptionalValuesTransformer<
 > = (
   dependencyValues: InferOptionalWaitableAndBindingValueTypes<DependenciesT>,
   dependencies: DependenciesT,
-  setFailure: (failure: FailureT) => void
+  setFailure: (failure: FailureT) => void,
+  wasReset: () => boolean
 ) => TypeOrPromisedType<SuccessT | undefined>;
 
 /**

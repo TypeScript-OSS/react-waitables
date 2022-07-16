@@ -157,7 +157,7 @@ export const useDerivedWaitable = <
    * - If any waitables have undefined values, the overall state is `'loading'`
    * - Otherwise, the overall state is `'loaded'`
    */
-  const evaluate: WaitablePrimaryFunction<SuccessT, FailureT> = useCallbackRef(({ setSuccess, setFailure }) => {
+  const evaluate: WaitablePrimaryFunction<SuccessT, FailureT> = useCallbackRef(({ setSuccess, setFailure, wasReset }) => {
     const { allWaitablesAreLoaded, anyWaitablesHadErrors, lastError, values } = extractOptionalWaitableDependencyValues<
       DependenciesT,
       FailureT
@@ -173,7 +173,8 @@ export const useDerivedWaitable = <
           getLoadedTransformer()?.(
             values as InferRequiredWaitableAndBindingValueTypes<DependenciesT>,
             dependencies ?? (emptyDependencies as DependenciesT),
-            setFailure
+            setFailure,
+            wasReset
           ),
         setSuccess
       );
@@ -184,7 +185,8 @@ export const useDerivedWaitable = <
           getErrorTransformer()?.(
             values as InferOptionalWaitableAndBindingValueTypes<DependenciesT>,
             dependencies ?? (emptyDependencies as DependenciesT),
-            setFailure
+            setFailure,
+            wasReset
           ),
         (value) => {
           if (value !== undefined) {
@@ -201,7 +203,8 @@ export const useDerivedWaitable = <
           getLoadingTransformer()?.(
             values as InferOptionalWaitableAndBindingValueTypes<DependenciesT>,
             dependencies ?? (emptyDependencies as DependenciesT),
-            setFailure
+            setFailure,
+            wasReset
           ),
         setSuccess
       );

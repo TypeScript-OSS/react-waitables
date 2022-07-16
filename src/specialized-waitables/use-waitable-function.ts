@@ -1,6 +1,6 @@
 import type { EmptyObject } from 'react-bindings';
 
-import { makeValueThenDo } from '../internal-utils/make-value-then-do';
+import { makeValueWithArgsThenDo } from '../internal-utils/make-value-with-args-then-do';
 import type { TypeOrPromisedType } from '../resolveable/types';
 import type { UseWaitableArgs } from '../use-waitable/types/args';
 import { useWaitable } from '../use-waitable/use-waitable';
@@ -15,12 +15,12 @@ import type { WrappedResult } from '../waitable/types/wrapped-result';
  * once during a single run.
  */
 export const useWaitableFunction = <SuccessT, FailureT = any, ExtraFieldsT = EmptyObject>(
-  primaryFunc: () => TypeOrPromisedType<WrappedResult<SuccessT, FailureT>>,
+  primaryFunc: (args: { wasReset: () => boolean }) => TypeOrPromisedType<WrappedResult<SuccessT, FailureT>>,
   options: UseWaitableArgs<SuccessT, FailureT, ExtraFieldsT>
 ) =>
   useWaitable<SuccessT, FailureT, ExtraFieldsT>(
-    ({ setSuccess, setFailure }) =>
-      makeValueThenDo(primaryFunc, (result) => {
+    ({ setSuccess, setFailure, wasReset }) =>
+      makeValueWithArgsThenDo(primaryFunc, [{ wasReset }], (result) => {
         if (result === undefined) {
           return;
         }
