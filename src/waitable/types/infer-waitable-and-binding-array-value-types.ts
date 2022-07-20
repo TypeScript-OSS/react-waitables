@@ -8,6 +8,8 @@ import type { WaitableArrayDependencies } from './waitable-dependencies';
 export type InferRequiredWaitableAndBindingArrayValueTypes<DependenciesT extends WaitableArrayDependencies> = {
   [KeyT in keyof DependenciesT]: DependenciesT[KeyT] extends Waitable<any>
     ? InferWaitableSuccessType<DependenciesT[KeyT]>
+    : DependenciesT[KeyT] extends Waitable<any> | undefined
+    ? InferWaitableSuccessType<DependenciesT[KeyT]> | undefined
     : DependenciesT[KeyT] extends ReadonlyBinding
     ? InferBindingGetType<DependenciesT[KeyT]>
     : DependenciesT[KeyT] extends ReadonlyBinding | undefined
@@ -17,7 +19,7 @@ export type InferRequiredWaitableAndBindingArrayValueTypes<DependenciesT extends
 
 /** Infers the value types from waitable and binding arrays */
 export type InferOptionalWaitableAndBindingArrayValueTypes<DependenciesT extends WaitableArrayDependencies> = {
-  [KeyT in keyof DependenciesT]: DependenciesT[KeyT] extends Waitable<any>
+  [KeyT in keyof DependenciesT]: DependenciesT[KeyT] extends Waitable<any> | undefined
     ? InferWaitableSuccessType<DependenciesT[KeyT]> | undefined
     : DependenciesT[KeyT] extends ReadonlyBinding
     ? InferBindingGetType<DependenciesT[KeyT]>

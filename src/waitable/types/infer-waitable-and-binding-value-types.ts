@@ -15,6 +15,8 @@ import type { NamedWaitableDependencies, WaitableArrayDependencies, WaitableDepe
 /** Infers the values of either a single binding, bindings in an array or tuple, or a record with binding values */
 export type InferRequiredWaitableAndBindingValueTypes<DependenciesT extends WaitableDependencies> = DependenciesT extends Waitable<any>
   ? InferWaitableSuccessType<DependenciesT>
+  : DependenciesT extends Waitable<any> | undefined
+  ? InferWaitableSuccessType<DependenciesT> | undefined
   : DependenciesT extends ReadonlyBinding
   ? InferBindingGetType<DependenciesT>
   : DependenciesT extends NamedWaitableDependencies
@@ -24,7 +26,9 @@ export type InferRequiredWaitableAndBindingValueTypes<DependenciesT extends Wait
   : Record<string, never>;
 
 /** Infers the values of either a single binding, bindings in an array or tuple, or a record with binding values */
-export type InferOptionalWaitableAndBindingValueTypes<DependenciesT extends WaitableDependencies> = DependenciesT extends Waitable<any>
+export type InferOptionalWaitableAndBindingValueTypes<DependenciesT extends WaitableDependencies> = DependenciesT extends
+  | Waitable<any>
+  | undefined
   ? InferWaitableSuccessType<DependenciesT> | undefined
   : DependenciesT extends ReadonlyBinding
   ? InferBindingGetType<DependenciesT>

@@ -9,6 +9,8 @@ export type InferRequiredNamedWaitablesAndBindingValueTypes<
 > = {
   [KeyT in keyof NamedDependenciesT]: NamedDependenciesT[KeyT] extends Waitable<any>
     ? InferWaitableSuccessType<NamedDependenciesT[KeyT]>
+    : NamedDependenciesT[KeyT] extends Waitable<any> | undefined
+    ? InferWaitableSuccessType<NamedDependenciesT[KeyT]> | undefined
     : NamedDependenciesT[KeyT] extends ReadonlyBinding
     ? InferBindingGetType<NamedDependenciesT[KeyT]>
     : NamedDependenciesT[KeyT] extends ReadonlyBinding | undefined
@@ -20,7 +22,7 @@ export type InferRequiredNamedWaitablesAndBindingValueTypes<
 export type InferOptionalNamedWaitablesAndBindingValueTypes<
   NamedDependenciesT extends Record<string, Waitable<any> | ReadonlyBinding | undefined>
 > = {
-  [KeyT in keyof NamedDependenciesT]: NamedDependenciesT[KeyT] extends Waitable<any>
+  [KeyT in keyof NamedDependenciesT]: NamedDependenciesT[KeyT] extends Waitable<any> | undefined
     ? InferWaitableSuccessType<NamedDependenciesT[KeyT]> | undefined
     : NamedDependenciesT[KeyT] extends ReadonlyBinding
     ? InferBindingGetType<NamedDependenciesT[KeyT]>
