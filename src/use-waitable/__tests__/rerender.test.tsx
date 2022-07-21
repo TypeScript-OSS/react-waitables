@@ -76,10 +76,9 @@ describe('useWaitable', () => {
 
         refresh.set(1);
 
-        await expect(waitFor(() => expect(waitable?.value.get()).not.toBe(1))).rejects.toThrow();
+        await waitFor(() => expect(waitablePrimaryFunc).toHaveBeenCalledTimes(2));
 
         expect(waitable?.error.get()).toBeUndefined();
-        expect(waitablePrimaryFunc).toHaveBeenCalledTimes(1);
         expect(MyComponent).toHaveBeenCalledTimes(2);
       });
 

@@ -1320,9 +1320,9 @@ camelcase@^6.2.0, camelcase@^6.3.0:
   integrity sha512-Gmy6FhYlCY7uOElZUSbxo2UCDH8owEk996gkbrpsgGtrJLM3J7jGxl9Ic7Qwwj4ivOE5AWZWRMecDdF7hqGjFA==
 
 caniuse-lite@^1.0.30001366:
-  version "1.0.30001367"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001367.tgz#2b97fe472e8fa29c78c5970615d7cd2ee414108a"
-  integrity sha512-XDgbeOHfifWV3GEES2B8rtsrADx4Jf+juKX2SICJcaUhjYBO3bR96kvEIHa15VU6ohtOhBZuPGGYGbXMRn0NCw==
+  version "1.0.30001368"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001368.tgz#c5c06381c6051cd863c45021475434e81936f713"
+  integrity sha512-wgfRYa9DenEomLG/SdWgQxpIyvdtH3NW8Vq+tB6AwR9e56iOIcu1im5F/wNdDf04XlKHXqIx4N8Jo0PemeBenQ==
 
 chalk@^2.0.0:
   version "2.4.2"
@@ -4157,10 +4157,10 @@ rc@^1.2.7:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
-react-bindings@^1.4.2:
-  version "1.4.2"
-  resolved "https://registry.yarnpkg.com/react-bindings/-/react-bindings-1.4.2.tgz#12d5c6d1cd7c0d8ec6f4a7696650983cf4ed0d42"
-  integrity sha512-7zsN0ZhWzcIrOsMSYgFp9Su5HQLfNo+eolZLsCkQKOaOdfm1cOU5pZiw59W2SMlD525YCQlZQ478KkG4os2/5g==
+react-bindings@^1.4.3:
+  version "1.4.3"
+  resolved "https://registry.yarnpkg.com/react-bindings/-/react-bindings-1.4.3.tgz#f8c753e01fdd7e41244fa93cb9c4579d5f663203"
+  integrity sha512-Bo4eGHGKYXes0+IQmVSKf1EXGFMym8Os1vcIAMmCg2JPIfW/46JWKy8T8qlH1K/GVW2Tk6kMz7CFkD/gU127Ug==
   dependencies:
     client-run-queue "^1.1.8"
     is-promise "^4.0.0"
