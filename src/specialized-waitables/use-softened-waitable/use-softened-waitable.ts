@@ -14,7 +14,7 @@ import { UseSoftenedWaitableArgs } from './types';
  * Hard resets on the softened waitable clear out the remembered values.
  */
 export const useSoftenedWaitable = <SuccessT, FailureT, ExtraFieldsT = EmptyObject>(
-  originalWaitable: Waitable<SuccessT, FailureT>,
+  originalWaitable: Waitable<SuccessT, FailureT> | undefined,
   args: UseSoftenedWaitableArgs<SuccessT, FailureT, ExtraFieldsT>
 ) => {
   const lastSuccess = useRef<SuccessT | undefined>(undefined);
@@ -23,8 +23,8 @@ export const useSoftenedWaitable = <SuccessT, FailureT, ExtraFieldsT = EmptyObje
   const softenedWaitable = useDerivedWaitable(
     undefined,
     (_dependencyValues, _dependencies, setFailure): SuccessT | undefined => {
-      const value = originalWaitable.value.get();
-      const error = originalWaitable.error.get();
+      const value = originalWaitable?.value.get();
+      const error = originalWaitable?.error.get();
       if (value !== undefined) {
         lastFailure.current = undefined;
         lastSuccess.current = value;
@@ -45,9 +45,9 @@ export const useSoftenedWaitable = <SuccessT, FailureT, ExtraFieldsT = EmptyObje
     },
     {
       ...args,
-      defaultValue: () => originalWaitable.value.get(),
+      defaultValue: () => originalWaitable?.value.get(),
       limitType: 'none',
-      softResetBindings: concatArrays([originalWaitable.isComplete], normalizeAsOptionalArray(args.softResetBindings)),
+      softResetBindings: concatArrays([originalWaitable?.isComplete], normalizeAsOptionalArray(args.softResetBindings)),
       onReset: (resetType) => {
         if (resetType === 'hard') {
           lastFailure.current = undefined;
