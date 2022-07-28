@@ -80,6 +80,7 @@ export const WaitablesConsumer = <DependenciesT extends WaitableDependencies = R
     priority,
     queue
   });
+  node.reset('soft');
 
   return (
     <BindingsConsumer bindings={{ node: node.value }} {...limiterOptions}>
