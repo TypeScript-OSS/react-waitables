@@ -78,7 +78,9 @@ export const WaitablesConsumer = <DependenciesT extends WaitableDependencies = R
   const node: Waitable<ReactNode> = useDerivedWaitable(dependencies, combinedTransformers, {
     id,
     priority,
-    queue
+    queue,
+    detectErrorChanges: false,
+    detectValueChanges: false
   });
   node.reset('soft');
 
