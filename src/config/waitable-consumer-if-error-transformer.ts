@@ -5,7 +5,12 @@ import type { ReactNode } from 'react';
 import type { Waitable } from '../waitable/types/waitable';
 import type { WaitableDependencies } from '../waitable/types/waitable-dependencies';
 
-type IfErrorTransformer = (dependencies: WaitableDependencies, node: Waitable<ReactNode>) => ReactNode;
+/**
+ * A transformer to be run, by default if no other error transformer is used.
+ *
+ * @see `setDefaultWaitablesConsumerIfErrorTransformer`
+ */
+export type IfErrorTransformer = (dependencies: WaitableDependencies, node: Waitable<ReactNode>) => ReactNode;
 
 let globalDefaultWaitablesConsumerIfErrorTransformer: IfErrorTransformer | undefined;
 
