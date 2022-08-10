@@ -1,6 +1,6 @@
 {
   "name": "react-waitables",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "description": "Async data bindings for React",
   "keywords": [
     "async",
@@ -21,7 +21,7 @@
     "audit": "yarn audit --moderate",
     "build": "tsc -p tsconfig.build.json",
     "build:dev": "trash dev-build && yarn build && mkdir dev-build && cp -r lib dev-build && cp package.json dev-build && (cd dev-build && echo 'package' `pwd`)",
-    "clean": "trash lib",
+    "clean": "trash coverage dev-build docs lib",
     "generate:docs": "npx typedoc src/index.ts",
     "lint": "eslint 'src/**/*.ts?(x)' --max-warnings 0",
     "prepublishOnly": "yarn clean && yarn test && yarn lint && yarn audit && yarn clean && yarn build && yarn generate:docs",
