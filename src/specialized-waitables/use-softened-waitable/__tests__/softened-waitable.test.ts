@@ -2,7 +2,7 @@ import { waitFor } from '@testing-library/react';
 import { useBinding } from 'react-bindings';
 
 import { runInDom, sleep } from '../../../__test_dependency__';
-import { useDerivedWaitable } from '../../exports';
+import { useDerivedWaitable } from '../../use-derived-waitable/use-derived-waitable';
 import { useSoftenedWaitable } from '../use-softened-waitable';
 
 describe('useSoftenedWaitable', () => {

@@ -172,8 +172,8 @@ export const useWaitable = <SuccessT, FailureT = any, ExtraFieldsT = EmptyObject
   const hardReset = useCallbackRef(() => reset('hard'));
   const softReset = useCallbackRef(() => reset('soft'));
 
-  const wait: Waitable<SuccessT, FailureT>['wait'] = useCallbackRef(({ timeoutMSec } = {}) =>
-    waitForBindingValues({ error, resetCount, timeoutMSec, value })
+  const wait: Waitable<SuccessT, FailureT>['wait'] = useCallbackRef((options) =>
+    waitForBindingValues({ error, resetCount, value, ...options })
   );
 
   /** If true, this waitable is locked */

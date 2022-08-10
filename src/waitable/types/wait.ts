@@ -1,4 +1,20 @@
+import type { TypeOrDeferredType } from 'react-bindings';
+
 export interface WaitOptions {
+  /**
+   * Checked if a failure occurs while waiting.  If `true`, continues waiting.  Otherwise, stops waiting and the `wait` function returns
+   * `'failure'`
+   *
+   * @defaultValue `false`
+   */
+  continueWaitingOnFailure?: TypeOrDeferredType<boolean>;
+  /**
+   * Checked if a reset occurs while waiting.  If `true`, continues waiting.  Otherwise, stops waiting and the `wait` function returns
+   * `'reset'`
+   *
+   * @defaultValue `true`
+   */
+  continueWaitingOnReset?: TypeOrDeferredType<boolean>;
   /**
    * If specified, the interval after which the `wait` function will resolve with `'timeout'` if the waitable is still incomplete.
    *

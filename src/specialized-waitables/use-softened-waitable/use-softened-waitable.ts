@@ -1,10 +1,10 @@
 import { useRef } from 'react';
-import { EmptyObject } from 'react-bindings';
+import type { EmptyObject } from 'react-bindings';
 
 import { concatArrays, normalizeAsOptionalArray } from '../../internal-utils/array-like';
-import { Waitable } from '../../waitable/types/waitable';
+import type { Waitable } from '../../waitable/types/waitable';
 import { useDerivedWaitable } from '../use-derived-waitable/use-derived-waitable';
-import { UseSoftenedWaitableArgs } from './types';
+import type { UseSoftenedWaitableArgs } from './types';
 
 /**
  * Derives a waitable from another waitable where the last known value of the original waitable is remembered until a new value is

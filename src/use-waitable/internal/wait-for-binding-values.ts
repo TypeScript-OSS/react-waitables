@@ -1,4 +1,4 @@
-import type { ReadonlyBinding } from 'react-bindings';
+import { ReadonlyBinding, resolveTypeOrDeferredType, TypeOrDeferredType } from 'react-bindings';
 
 import type { WaitResult } from '../../waitable/types/wait';
 
@@ -13,11 +13,15 @@ import type { WaitResult } from '../../waitable/types/wait';
  * waitable was reset, or `'timeout'` if no value was defined before the allowed time elapsed.
  */
 export const waitForBindingValues = ({
+  continueWaitingOnFailure = false,
+  continueWaitingOnReset = true,
   error,
   resetCount,
   timeoutMSec,
   value
 }: {
+  continueWaitingOnFailure?: TypeOrDeferredType<boolean>;
+  continueWaitingOnReset?: TypeOrDeferredType<boolean>;
   error: ReadonlyBinding;
   resetCount: ReadonlyBinding;
   timeoutMSec?: number;
@@ -45,8 +49,10 @@ export const waitForBindingValues = ({
 
       removers.push(
         resetCount.addChangeListener(() => {
-          clearRemoversAndTimeout();
-          resolve('reset');
+          if (!resolveTypeOrDeferredType(continueWaitingOnReset)) {
+            clearRemoversAndTimeout();
+            resolve('reset');
+          }
         })
       );
 
@@ -59,8 +65,10 @@ export const waitForBindingValues = ({
 
       removers.push(
         error.addChangeListener(() => {
-          clearRemoversAndTimeout();
-          resolve('failure');
+          if (!resolveTypeOrDeferredType(continueWaitingOnFailure)) {
+            clearRemoversAndTimeout();
+            resolve('failure');
+          }
         })
       );
 
