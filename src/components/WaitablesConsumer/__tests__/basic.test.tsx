@@ -8,6 +8,23 @@ import { useWaitableFunction } from '../../../specialized-waitables/use-waitable
 import { WaitablesConsumer } from '../WaitablesConsumer';
 
 describe('WaitablesConsumer', () => {
+  it('should work with undefined dependencies', () =>
+    runInDom(({ onMount }) => {
+      onMount(async (rootElement) => {
+        expect(rootElement.innerHTML).toBe('<div><div></div></div>');
+      });
+
+      return (
+        <WaitablesConsumer dependencies={undefined}>
+          {(values) => {
+            expect(values).toBeUndefined();
+
+            return <div />;
+          }}
+        </WaitablesConsumer>
+      );
+    }));
+
   it('should work with both named binding and waitables', () =>
     runInDom(({ onMount }) => {
       const a = useBinding(() => 1, { id: 'a' });
