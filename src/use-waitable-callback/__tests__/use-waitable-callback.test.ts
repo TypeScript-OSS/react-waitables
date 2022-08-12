@@ -3,6 +3,19 @@ import { useWaitableFunction } from '../../specialized-waitables/use-waitable-fu
 import { useWaitableCallback } from '../use-waitable-callback';
 
 describe('useWaitableCallback', () => {
+  it('should work with undefined dependencies', () =>
+    runInDom(({ onMount }) => {
+      const ifReadyCallback = jest.fn();
+      const myWaitableCallback = useWaitableCallback(undefined, ifReadyCallback);
+
+      onMount(async () => {
+        expect(ifReadyCallback).not.toHaveBeenCalled();
+        const res = await myWaitableCallback();
+        expect(res).toBe('success');
+        expect(ifReadyCallback).toHaveBeenCalledTimes(1);
+      });
+    }));
+
   it('should work with 0ms timeout', () =>
     runInDom(({ onMount }) => {
       const myWaitable = useWaitableFunction(

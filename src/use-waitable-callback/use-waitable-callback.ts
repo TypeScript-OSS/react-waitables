@@ -2,6 +2,7 @@ import { useDerivedBinding } from 'react-bindings';
 
 import { useCallbackRef } from '../internal-hooks/use-callback-ref';
 import { useDerivedWaitable } from '../specialized-waitables/use-derived-waitable/use-derived-waitable';
+import type { InferRequiredWaitableAndBindingValueTypes } from '../waitable/types/infer-waitable-and-binding-value-types';
 import type { WaitableDependencies } from '../waitable/types/waitable-dependencies';
 import type { IfReadyCallback } from './types/internal/if-ready-callback';
 import type { UseWaitableCallbackOptions } from './types/options';
@@ -17,7 +18,7 @@ export const useWaitableCallback = <ArgsT extends any[], DependenciesT extends W
   ifReady: IfReadyCallback<ArgsT, DependenciesT>,
   { id = 'waitable-callback', deps, ifNotReady, ...waitOptions }: UseWaitableCallbackOptions<ArgsT, DependenciesT> = {}
 ): WaitableCallback<ArgsT> => {
-  const dependencyValues = useDerivedWaitable(dependencies, (dependencies) => dependencies, {
+  const dependencyValues = useDerivedWaitable(dependencies, (dependencies) => dependencies ?? null, {
     id: `${id}_dependencyValues`,
     deps,
     limitType: 'none'
@@ -40,7 +41,11 @@ export const useWaitableCallback = <ArgsT extends any[], DependenciesT extends W
     if (theDependencyValues === undefined) {
       await ifNotReady?.(dependencies as DependenciesT, ...args);
     } else {
-      await ifReady(theDependencyValues, dependencies as DependenciesT, ...args);
+      await ifReady(
+        (dependencies === undefined ? undefined : theDependencyValues) as InferRequiredWaitableAndBindingValueTypes<DependenciesT>,
+        dependencies as DependenciesT,
+        ...args
+      );
     }
 
     return waitResult;
