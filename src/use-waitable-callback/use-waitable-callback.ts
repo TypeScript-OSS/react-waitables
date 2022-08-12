@@ -12,7 +12,7 @@ import type { WaitableCallback } from './types/waitable-callback';
  *
  * The resulting function also has special binding properties for checking if the functions is ready: `isReady` and `isNotReady`.
  */
-export const useWaitableCallback = <ArgsT extends any[], DependenciesT extends WaitableDependencies = Record<string, never>>(
+export const useWaitableCallback = <ArgsT extends any[], DependenciesT extends WaitableDependencies>(
   dependencies: DependenciesT | undefined,
   ifReady: IfReadyCallback<ArgsT, DependenciesT>,
   { id = 'waitable-callback', deps, ifNotReady, ...waitOptions }: UseWaitableCallbackOptions<ArgsT, DependenciesT> = {}

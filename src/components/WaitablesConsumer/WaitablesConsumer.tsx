@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react';
-import { BindingsConsumer, EmptyObject, SingleOrArray } from 'react-bindings';
+import { BindingsConsumer, SingleOrArray } from 'react-bindings';
 
 import { getDefaultWaitablesConsumerIfErrorTransformer } from '../../config/waitable-consumer-if-error-transformer';
 import { useCallbackRef } from '../../internal-hooks/use-callback-ref';
@@ -9,8 +9,6 @@ import type { Waitable } from '../../waitable/types/waitable';
 import type { WaitableDependencies } from '../../waitable/types/waitable-dependencies';
 import type { WaitablesConsumerProps } from './types/props';
 import type { WaitablesConsumerNamedTransformers, WaitablesConsumerRequiredValuesTransformer } from './types/transformers';
-
-const emptyDependencies = Object.freeze({} as EmptyObject);
 
 /**
  * A component that is rerendered based on input waitable and binding changes.
@@ -40,7 +38,7 @@ const emptyDependencies = Object.freeze({} as EmptyObject);
  *
  * If no transformers are applicable, nothing will be rendered.
  */
-export const WaitablesConsumer = <DependenciesT extends WaitableDependencies = Record<string, never>>({
+export const WaitablesConsumer = <DependenciesT extends WaitableDependencies>({
   children,
   id = 'waitable-consumer',
   dependencies,
@@ -69,9 +67,7 @@ export const WaitablesConsumer = <DependenciesT extends WaitableDependencies = R
     ifLoading
   };
 
-  const ifErrorTransformer = useCallbackRef(
-    (): ReactNode => getDefaultWaitablesConsumerIfErrorTransformer()?.(dependencies ?? (emptyDependencies as DependenciesT), node) ?? null
-  );
+  const ifErrorTransformer = useCallbackRef((): ReactNode => getDefaultWaitablesConsumerIfErrorTransformer()?.(dependencies, node) ?? null);
 
   const combinedTransformers = [...normalizeAsArray(children), propsBasedTransformers, { ifError: ifErrorTransformer }];
 

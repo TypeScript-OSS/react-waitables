@@ -53,12 +53,7 @@ const emptyLockedWhile = Object.freeze([]) as unknown as Array<ReadonlyBinding |
  * @param transformers - An ordered list of transformers.  The first applicable one is applied.  If multiple named rules are specified in a
  * single object, they are evaluated in the order: `ifLoaded`, `ifError`, `ifLoading`, `ifErrorOrLoading`, `always`
  */
-export const useDerivedWaitable = <
-  SuccessT,
-  FailureT,
-  DependenciesT extends WaitableDependencies = Record<string, never>,
-  ExtraFieldsT = EmptyObject
->(
+export const useDerivedWaitable = <SuccessT, FailureT, DependenciesT extends WaitableDependencies, ExtraFieldsT = EmptyObject>(
   dependencies: DependenciesT | undefined,
   transformers: SingleOrArray<
     | UseDerivedWaitableRequiredValuesTransformer<SuccessT, FailureT, DependenciesT>

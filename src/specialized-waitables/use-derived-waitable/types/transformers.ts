@@ -6,11 +6,7 @@ import type {
 import type { WaitableDependencies } from '../../../waitable/types/waitable-dependencies';
 
 /** A transformer that requires all waitable values to be loaded. */
-export type UseDerivedWaitableRequiredValuesTransformer<
-  SuccessT,
-  FailureT,
-  DependenciesT extends WaitableDependencies = Record<string, never>
-> = (
+export type UseDerivedWaitableRequiredValuesTransformer<SuccessT, FailureT, DependenciesT extends WaitableDependencies> = (
   dependencyValues: InferRequiredWaitableAndBindingValueTypes<DependenciesT>,
   dependencies: DependenciesT,
   setFailure: (failure: FailureT) => void,
@@ -18,11 +14,7 @@ export type UseDerivedWaitableRequiredValuesTransformer<
 ) => TypeOrPromisedType<SuccessT | undefined>;
 
 /** A transformer that doesn't require all waitable values to be loaded. */
-export type UseDerivedWaitableOptionalValuesTransformer<
-  SuccessT,
-  FailureT,
-  DependenciesT extends WaitableDependencies = Record<string, never>
-> = (
+export type UseDerivedWaitableOptionalValuesTransformer<SuccessT, FailureT, DependenciesT extends WaitableDependencies> = (
   dependencyValues: InferOptionalWaitableAndBindingValueTypes<DependenciesT>,
   dependencies: DependenciesT,
   setFailure: (failure: FailureT) => void,
@@ -35,11 +27,7 @@ export type UseDerivedWaitableOptionalValuesTransformer<
  * The first applicable transformer is used, evaluated in the following order: `ifLoaded`, `ifError`, `ifLoading`, `ifErrorOrLoading`,
  * `always`
  */
-export interface UseDerivedWaitableNamedTransformers<
-  SuccessT,
-  FailureT,
-  DependenciesT extends WaitableDependencies = Record<string, never>
-> {
+export interface UseDerivedWaitableNamedTransformers<SuccessT, FailureT, DependenciesT extends WaitableDependencies> {
   ifLoaded?: UseDerivedWaitableRequiredValuesTransformer<SuccessT, FailureT, DependenciesT>;
   ifError?: UseDerivedWaitableOptionalValuesTransformer<SuccessT, FailureT, DependenciesT>;
   ifLoading?: UseDerivedWaitableOptionalValuesTransformer<SuccessT, FailureT, DependenciesT>;

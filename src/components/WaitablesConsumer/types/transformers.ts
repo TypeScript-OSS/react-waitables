@@ -7,13 +7,13 @@ import {
 import type { WaitableDependencies } from '../../../waitable/types/waitable-dependencies';
 
 /** A transformer that requires all waitable values to be loaded. */
-export type WaitablesConsumerRequiredValuesTransformer<DependenciesT extends WaitableDependencies = Record<string, never>> = (
+export type WaitablesConsumerRequiredValuesTransformer<DependenciesT extends WaitableDependencies> = (
   dependencyValues: InferRequiredWaitableAndBindingValueTypes<DependenciesT>,
   dependencies: DependenciesT
 ) => ReactNode;
 
 /** A transformer that doesn't require all waitable values to be loaded. */
-export type WaitablesConsumerOptionalValuesTransformer<DependenciesT extends WaitableDependencies = Record<string, never>> = (
+export type WaitablesConsumerOptionalValuesTransformer<DependenciesT extends WaitableDependencies> = (
   dependencyValues: InferOptionalWaitableAndBindingValueTypes<DependenciesT>,
   dependencies: DependenciesT
 ) => ReactNode;
@@ -24,7 +24,7 @@ export type WaitablesConsumerOptionalValuesTransformer<DependenciesT extends Wai
  * The first applicable transformer is used, evaluated in the following order: `ifLoaded`, `ifError`, `ifLoading`, `ifErrorOrLoading`,
  * `always`
  */
-export interface WaitablesConsumerNamedTransformers<DependenciesT extends WaitableDependencies = Record<string, never>> {
+export interface WaitablesConsumerNamedTransformers<DependenciesT extends WaitableDependencies> {
   /** All waitables have defined values */
   ifLoaded?: WaitablesConsumerRequiredValuesTransformer<DependenciesT>;
   /** At least one waitable has a defined error */

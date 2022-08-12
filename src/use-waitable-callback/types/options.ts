@@ -4,8 +4,7 @@ import type { WaitOptions } from '../../waitable/types/wait';
 import type { WaitableDependencies } from '../../waitable/types/waitable-dependencies';
 import type { IfNotReadyCallback } from './internal/if-not-ready-callback';
 
-export interface UseWaitableCallbackOptions<ArgsT extends any[], DependenciesT extends WaitableDependencies = Record<string, never>>
-  extends WaitOptions {
+export interface UseWaitableCallbackOptions<ArgsT extends any[], DependenciesT extends WaitableDependencies> extends WaitOptions {
   /** A technical, but human-readable ID, which isn't guaranteed to be unique */
   id?: string;
 
