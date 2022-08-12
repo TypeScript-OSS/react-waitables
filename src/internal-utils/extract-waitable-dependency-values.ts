@@ -5,8 +5,6 @@ import type { Waitable } from '../waitable/types/waitable';
 import type { NamedWaitableDependencies, WaitableDependencies } from '../waitable/types/waitable-dependencies';
 import { isWaitable } from '../waitable/utils';
 
-const emptyValues = Object.freeze({});
-
 export const extractOptionalWaitableDependencyValues = <DependenciesT extends WaitableDependencies, FailureT>({
   dependencies,
   namedDependencyKeys
@@ -52,7 +50,7 @@ export const extractOptionalWaitableDependencyValues = <DependenciesT extends Wa
     return makeOutput(namedValues as InferOptionalWaitableAndBindingValueTypes<DependenciesT>);
   } else {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return makeOutput(emptyValues as InferOptionalWaitableAndBindingValueTypes<DependenciesT>);
+    return makeOutput(undefined as InferOptionalWaitableAndBindingValueTypes<DependenciesT>);
   }
 };
 
