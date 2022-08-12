@@ -23,10 +23,14 @@ export const useWaitableCallback = <ArgsT extends any[], DependenciesT extends W
     limitType: 'none'
   });
 
-  const isReady = useDerivedBinding(dependencyValues.value, (dependencyValues) => dependencyValues !== undefined, {
-    id: `${id}_isReady`,
-    limitType: 'none'
-  });
+  const isReady = useDerivedBinding(
+    dependencyValues.value,
+    (dependencyValues) => dependencies === undefined || dependencyValues !== undefined,
+    {
+      id: `${id}_isReady`,
+      limitType: 'none'
+    }
+  );
   const isNotReady = useDerivedBinding(isReady, (isReady) => !isReady, { id: `${id}_isNotReady`, limitType: 'none' });
 
   const output = useCallbackRef(async (...args: ArgsT) => {
