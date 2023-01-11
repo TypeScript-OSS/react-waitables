@@ -13,7 +13,7 @@ export type UseWaitableOnSuccessCallback<SuccessT> = (value: SuccessT | undefine
 
 export type UseWaitableOnFailureCallback<FailureT> = (value: FailureT) => void;
 
-export interface UseWaitableArgs<SuccessT, FailureT = any, ExtraFieldsT = EmptyObject> extends LimiterOptions {
+export interface UseWaitableArgs<SuccessT, FailureT = any, ExtraFieldsT extends object = EmptyObject> extends LimiterOptions {
   /** A technical, but human-readable ID, which isn't guaranteed to be unique */
   id: string;
 

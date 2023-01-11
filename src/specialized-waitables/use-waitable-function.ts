@@ -14,7 +14,7 @@ import type { WrappedResult } from '../waitable/types/wrapped-result';
  * This is likely a more natural form to work with in cases that don't require the ability to call `setSuccess` or `setFailure` more than
  * once during a single run.
  */
-export const useWaitableFunction = <SuccessT, FailureT = any, ExtraFieldsT = EmptyObject>(
+export const useWaitableFunction = <SuccessT, FailureT = any, ExtraFieldsT extends object = EmptyObject>(
   primaryFunc: (args: { wasReset: () => boolean }) => TypeOrPromisedType<WrappedResult<SuccessT, FailureT>>,
   options: UseWaitableArgs<SuccessT, FailureT, ExtraFieldsT>
 ) =>

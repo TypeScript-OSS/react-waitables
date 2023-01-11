@@ -46,7 +46,7 @@ const emptyBindingsArray = Object.freeze([]) as unknown as Array<ReadonlyBinding
  * During default value generation, if an error occurs, either thrown or via `setFailure` if using `defaultValue='use-primary-function'`,
  * `reset('soft')` is automatically called so the primary function can be run again as applicable.
  */
-export const useWaitable = <SuccessT, FailureT = any, ExtraFieldsT = EmptyObject>(
+export const useWaitable = <SuccessT, FailureT = any, ExtraFieldsT extends object = EmptyObject>(
   primaryFunc: WaitablePrimaryFunction<SuccessT, FailureT>,
   {
     id,

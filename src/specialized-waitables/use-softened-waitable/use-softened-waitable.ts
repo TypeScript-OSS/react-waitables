@@ -13,7 +13,7 @@ import type { UseSoftenedWaitableArgs } from './types';
  *
  * Hard resets on the softened waitable clear out the remembered values.
  */
-export const useSoftenedWaitable = <SuccessT, FailureT, ExtraFieldsT = EmptyObject>(
+export const useSoftenedWaitable = <SuccessT, FailureT, ExtraFieldsT extends object = EmptyObject>(
   originalWaitable: Waitable<SuccessT, FailureT> | undefined,
   args: UseSoftenedWaitableArgs<SuccessT, FailureT, ExtraFieldsT>
 ) => {
