@@ -1404,10 +1404,10 @@ cli-spinners@^2.5.0:
   resolved "https://registry.yarnpkg.com/cli-spinners/-/cli-spinners-2.7.0.tgz#f815fd30b5f9eaac02db604c7a231ed7cb2f797a"
   integrity sha512-qu3pN8Y3qHNgE2AFweciB1IfMnmZ/fsNTEE+NOFjmGB2F/7rLhnhzppvpCnN4FovtP26k8lHyy9ptEbNwWFLzw==
 
-client-run-queue@^1.1.11:
-  version "1.1.11"
-  resolved "https://registry.yarnpkg.com/client-run-queue/-/client-run-queue-1.1.11.tgz#2c208f30d885cf0dd35de2b3be41b331658772f9"
-  integrity sha512-0B2O0JdFgESnbukZyFl/Oah5YvU36/Ep8Q+x7mmY6TOioswR/mwd+r+xuI6XTfpVop4cgFd/Xcjff3vqb9a4Ow==
+client-run-queue@^1.1.12:
+  version "1.1.12"
+  resolved "https://registry.yarnpkg.com/client-run-queue/-/client-run-queue-1.1.12.tgz#b9cb0b89b1354252bc30479236d8a0b955bdb479"
+  integrity sha512-I2eS0QLhCfxq0k8tDE5idRY+zMaUHAgTqnCkBVYqHnwF5m9Gkut7S80b8hbjw+Rxqp7aljFdCdZQnPlZTi0mPA==
   dependencies:
     heap "^0.2.7"
 
@@ -4335,12 +4335,12 @@ rc@^1.2.7:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
-react-bindings@^1.6.5:
-  version "1.6.5"
-  resolved "https://registry.yarnpkg.com/react-bindings/-/react-bindings-1.6.5.tgz#da41dbd50b06f106d1f762db5b7da5685f72c13d"
-  integrity sha512-2Eq9DyMuV/HKxs2Zi17LX3UjkEMpt3u1Cu2FK6e6gm18W9ydc2WRdm3CyszsjspWrP+/XThEwUs0vovjYgD4Rw==
+react-bindings@^1.6.6:
+  version "1.6.6"
+  resolved "https://registry.yarnpkg.com/react-bindings/-/react-bindings-1.6.6.tgz#2f460137999a1bee47a53377ddb557f8cdb0a9a9"
+  integrity sha512-IqiNa/Ddb06Y/HYVJHOMMQ8J6Ws4vxL3W7CPH0U5qASHipdP+V1r4Dc0UY+y0lRcdd4CEnCm3iI9lqDgO8YCHQ==
   dependencies:
-    client-run-queue "^1.1.11"
+    client-run-queue "^1.1.12"
     is-promise "^4.0.0"
     lodash "^4.17.21"
 
