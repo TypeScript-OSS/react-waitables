@@ -1,6 +1,6 @@
 {
   "name": "react-waitables",
-  "version": "1.6.0",
+  "version": "1.6.1",
   "description": "Async data bindings for React",
   "keywords": [
     "async",
@@ -35,9 +35,9 @@
     "react-dom": ">=16.9.0"
   },
   "dependencies": {
-    "client-run-queue": "^2.0.0",
+    "client-run-queue": "^2.0.1",
     "is-promise": "^4.0.0",
-    "react-bindings": "^1.7.0"
+    "react-bindings": "^1.7.1"
   },
   "devDependencies": {
     "@testing-library/react": "^13.4.0",
