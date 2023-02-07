@@ -52,6 +52,27 @@ describe('useWaitable', () => {
       });
     }));
 
+  it('asynchronously set success value should be resolved with an asynchronous defaultValue function and then updated once the primary function completes', () =>
+    runInDom(({ onMount }) => {
+      const waitablePrimaryFunc: WaitablePrimaryFunction<number> = jest.fn(async ({ setSuccess }) => {
+        await sleep(50);
+        setSuccess(1);
+      });
+      const waitable = useWaitable<number>(waitablePrimaryFunc, {
+        id: 'test',
+        defaultValue: async () => -1
+      });
+
+      (async () => {
+        await waitFor(() => expect(waitable.value.get()).toBe(-1));
+      })();
+
+      onMount(async () => {
+        await waitFor(() => expect(waitable.value.get()).toBe(1));
+        expect(waitablePrimaryFunc).toHaveBeenCalledTimes(1);
+      });
+    }));
+
   it('asynchronously set success value should be resolved after being given enough time to run', () =>
     runInDom(({ onMount }) => {
       const waitablePrimaryFunc: WaitablePrimaryFunction<number> = jest.fn(async ({ setSuccess }) => {
