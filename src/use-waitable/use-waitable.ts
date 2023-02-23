@@ -6,13 +6,13 @@ import {
   ReadonlyBinding,
   useBinding,
   useBindingEffect,
+  useCallbackRef,
   useDefaultQueue,
   useDerivedBinding,
   useLimiter
 } from 'react-bindings';
 
 import { isSpecialLoggingEnabledFor } from '../config/logging';
-import { useCallbackRef } from '../internal-hooks/use-callback-ref';
 import { useIsMountedRef } from '../internal-hooks/use-is-mounted-ref';
 import { normalizeAsArray } from '../internal-utils/array-like';
 import { getTypedKeys } from '../internal-utils/get-typed-keys';

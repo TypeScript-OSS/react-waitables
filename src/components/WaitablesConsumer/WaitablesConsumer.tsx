@@ -1,8 +1,7 @@
 import React, { ReactNode } from 'react';
-import { BindingsConsumer, SingleOrArray } from 'react-bindings';
+import { BindingsConsumer, SingleOrArray, useCallbackRef } from 'react-bindings';
 
 import { getDefaultWaitablesConsumerIfErrorTransformer } from '../../config/waitable-consumer-if-error-transformer';
-import { useCallbackRef } from '../../internal-hooks/use-callback-ref';
 import { normalizeAsArray } from '../../internal-utils/array-like';
 import { useDerivedWaitable } from '../../specialized-waitables/use-derived-waitable/use-derived-waitable';
 import type { Waitable } from '../../waitable/types/waitable';

@@ -1,8 +1,6 @@
 import { useMemo } from 'react';
-import { EmptyObject, isBinding, ReadonlyBinding, SingleOrArray } from 'react-bindings';
+import { EmptyObject, isBinding, ReadonlyBinding, SingleOrArray, useCallbackRef, useStableValue } from 'react-bindings';
 
-import { useCallbackRef } from '../../internal-hooks/use-callback-ref';
-import { useStableValue } from '../../internal-hooks/use-stable-value';
 import { concatArrays, normalizeAsArray, normalizeAsOptionalArray } from '../../internal-utils/array-like';
 import { extractOptionalWaitableDependencyValues } from '../../internal-utils/extract-waitable-dependency-values';
 import { getTypedKeys } from '../../internal-utils/get-typed-keys';

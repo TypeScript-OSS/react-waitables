@@ -1,6 +1,5 @@
-import { useDerivedBinding } from 'react-bindings';
+import { useCallbackRef, useDerivedBinding } from 'react-bindings';
 
-import { useCallbackRef } from '../internal-hooks/use-callback-ref';
 import { useDerivedWaitable } from '../specialized-waitables/use-derived-waitable/use-derived-waitable';
 import type { InferRequiredWaitableAndBindingValueTypes } from '../waitable/types/infer-waitable-and-binding-value-types';
 import type { WaitableDependencies } from '../waitable/types/waitable-dependencies';

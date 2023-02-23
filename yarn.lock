@@ -4431,10 +4431,10 @@ rc@^1.2.7:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
-react-bindings@^1.7.1:
-  version "1.7.1"
-  resolved "https://registry.yarnpkg.com/react-bindings/-/react-bindings-1.7.1.tgz#80de1177e2e531dc03d417898aa1ca1d03eb2fe5"
-  integrity sha512-AlFYLr5blsIqV4W/VVjbaOhGNYKqHhos5dryGksdE1+6MGTU1ceAGFAJeHsyHVUy4+OEtdvsblHJMJCqU6E+RQ==
+react-bindings@^1.9.0:
+  version "1.9.0"
+  resolved "https://registry.yarnpkg.com/react-bindings/-/react-bindings-1.9.0.tgz#2294ec12008ba6b45d0ba701115c8560a23e70d2"
+  integrity sha512-zZsz171mcFU679Kqw+y8HAYy32a+xIqs/Jc3dXJ21SI76XuOyJBfMa3nFeVvFbLzvGc4973OsTEQ1J0zi3dK+Q==
   dependencies:
     client-run-queue "^2.0.1"
     is-promise "^4.0.0"
