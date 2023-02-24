@@ -187,8 +187,6 @@ Get creative and consider using waitables with React contexts, inside hooks, and
 
 Thanks for checking it out.  Feel free to create issues or otherwise provide feedback.
 
-react-waitables is maintained by the team at [Passfolio](https://www.passfolio.com).
-
 Be sure to check out our other [Open Source @ Passfolio](https://github.com/Passfolio) projects as well.
 
 <!-- Definitions -->
