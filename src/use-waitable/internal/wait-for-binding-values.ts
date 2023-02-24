@@ -1,4 +1,5 @@
-import { ReadonlyBinding, resolveTypeOrDeferredType, TypeOrDeferredType } from 'react-bindings';
+import type { ReadonlyBinding, TypeOrDeferredType } from 'react-bindings';
+import { resolveTypeOrDeferredType } from 'react-bindings';
 
 import type { WaitResult } from '../../waitable/types/wait';
 

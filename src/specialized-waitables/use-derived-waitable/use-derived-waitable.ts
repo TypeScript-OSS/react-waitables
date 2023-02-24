@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
-import { EmptyObject, isBinding, ReadonlyBinding, SingleOrArray, useCallbackRef, useStableValue } from 'react-bindings';
+import type { EmptyObject, ReadonlyBinding, SingleOrArray } from 'react-bindings';
+import { isBinding, useCallbackRef, useStableValue } from 'react-bindings';
 
 import { concatArrays, normalizeAsArray, normalizeAsOptionalArray } from '../../internal-utils/array-like';
 import { extractOptionalWaitableDependencyValues } from '../../internal-utils/extract-waitable-dependency-values';

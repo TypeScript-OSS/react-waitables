@@ -1,6 +1,7 @@
 import isPromise from 'is-promise';
 import type { MutableRefObject } from 'react';
-import { Binding, getLogger, ReadonlyBinding } from 'react-bindings';
+import type { Binding, ReadonlyBinding } from 'react-bindings';
+import { getLogger } from 'react-bindings';
 
 import type { UseWaitableOnFailureCallback, UseWaitableOnSuccessCallback } from '../types/args';
 import type { WaitablePrimaryFunction } from '../types/primary-function';

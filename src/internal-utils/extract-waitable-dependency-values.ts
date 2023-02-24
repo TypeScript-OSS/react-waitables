@@ -1,4 +1,5 @@
-import { isBinding, ReadonlyBinding } from 'react-bindings';
+import type { ReadonlyBinding } from 'react-bindings';
+import { isBinding } from 'react-bindings';
 
 import type { InferOptionalWaitableAndBindingValueTypes } from '../waitable/types/infer-waitable-and-binding-value-types';
 import type { Waitable } from '../waitable/types/waitable';

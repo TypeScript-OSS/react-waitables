@@ -1,5 +1,7 @@
-import React, { ReactNode } from 'react';
-import { BindingsConsumer, SingleOrArray, useCallbackRef } from 'react-bindings';
+import type { ReactNode } from 'react';
+import React from 'react';
+import type { SingleOrArray } from 'react-bindings';
+import { BindingsConsumer, useCallbackRef } from 'react-bindings';
 
 import { getDefaultWaitablesConsumerIfErrorTransformer } from '../../config/waitable-consumer-if-error-transformer';
 import { normalizeAsArray } from '../../internal-utils/array-like';

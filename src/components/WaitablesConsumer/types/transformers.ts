@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 
-import {
+import type {
   InferOptionalWaitableAndBindingValueTypes,
   InferRequiredWaitableAndBindingValueTypes
 } from '../../../waitable/types/infer-waitable-and-binding-value-types';

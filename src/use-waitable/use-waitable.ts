@@ -1,16 +1,7 @@
 import { DEFAULT_PRIORITY } from 'client-run-queue';
 import { useMemo, useRef } from 'react';
-import {
-  areEqual,
-  EmptyObject,
-  ReadonlyBinding,
-  useBinding,
-  useBindingEffect,
-  useCallbackRef,
-  useDefaultQueue,
-  useDerivedBinding,
-  useLimiter
-} from 'react-bindings';
+import type { EmptyObject, ReadonlyBinding } from 'react-bindings';
+import { areEqual, useBinding, useBindingEffect, useCallbackRef, useDefaultQueue, useDerivedBinding, useLimiter } from 'react-bindings';
 
 import { isSpecialLoggingEnabledFor } from '../config/logging';
 import { useIsMountedRef } from '../internal-hooks/use-is-mounted-ref';
