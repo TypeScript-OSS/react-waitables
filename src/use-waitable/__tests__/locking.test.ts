@@ -1,3 +1,4 @@
+import { jest } from '@jest/globals';
 import { waitFor } from '@testing-library/react';
 import { useBinding, useConstBinding } from 'react-bindings';
 
@@ -10,7 +11,7 @@ describe('useWaitable', () => {
     it("locked waitable shouldn't run", () =>
       runInDom(({ onMount }) => {
         const lock = useConstBinding(true, { id: 'lock' });
-        const waitablePrimaryFunc: WaitablePrimaryFunction<number> = jest.fn(({ setSuccess }) => {
+        const waitablePrimaryFunc = jest.fn<WaitablePrimaryFunction<number>>(({ setSuccess }) => {
           setSuccess(1);
         });
         const waitable = useWaitable<number>(waitablePrimaryFunc, { id: 'test', lockedWhile: lock });
@@ -29,7 +30,7 @@ describe('useWaitable', () => {
     it("previously locked waitable should run once it's unlocked", () =>
       runInDom(({ onMount }) => {
         const lock = useBinding(() => true, { id: 'lock' });
-        const waitablePrimaryFunc: WaitablePrimaryFunction<number> = jest.fn(({ setSuccess }) => {
+        const waitablePrimaryFunc = jest.fn<WaitablePrimaryFunction<number>>(({ setSuccess }) => {
           setSuccess(1);
         });
         const waitable = useWaitable<number>(waitablePrimaryFunc, { id: 'test', lockedWhile: lock });
@@ -56,7 +57,7 @@ describe('useWaitable', () => {
       runInDom(({ onMount }) => {
         const lock1 = useBinding(() => true, { id: 'lock1' });
         const lock2 = useBinding(() => true, { id: 'lock2' });
-        const waitablePrimaryFunc: WaitablePrimaryFunction<number> = jest.fn(({ setSuccess }) => {
+        const waitablePrimaryFunc = jest.fn<WaitablePrimaryFunction<number>>(({ setSuccess }) => {
           setSuccess(1);
         });
         const waitable = useWaitable<number>(waitablePrimaryFunc, { id: 'test', lockedWhile: [lock1, lock2] });
@@ -91,7 +92,7 @@ describe('useWaitable', () => {
     it("locked waitable shouldn't run", () =>
       runInDom(({ onMount }) => {
         const unlock = useConstBinding(false, { id: 'unlock' });
-        const waitablePrimaryFunc: WaitablePrimaryFunction<number> = jest.fn(({ setSuccess }) => {
+        const waitablePrimaryFunc = jest.fn<WaitablePrimaryFunction<number>>(({ setSuccess }) => {
           setSuccess(1);
         });
         const waitable = useWaitable<number>(waitablePrimaryFunc, { id: 'test', lockedUntil: unlock });
@@ -110,7 +111,7 @@ describe('useWaitable', () => {
     it("previously locked waitable should run once it's unlocked", () =>
       runInDom(({ onMount }) => {
         const unlock = useBinding(() => false, { id: 'unlock' });
-        const waitablePrimaryFunc: WaitablePrimaryFunction<number> = jest.fn(({ setSuccess }) => {
+        const waitablePrimaryFunc = jest.fn<WaitablePrimaryFunction<number>>(({ setSuccess }) => {
           setSuccess(1);
         });
         const waitable = useWaitable<number>(waitablePrimaryFunc, { id: 'test', lockedUntil: unlock });
@@ -137,7 +138,7 @@ describe('useWaitable', () => {
       runInDom(({ onMount }) => {
         const unlock1 = useBinding(() => false, { id: 'unlock1' });
         const unlock2 = useBinding(() => false, { id: 'unlock2' });
-        const waitablePrimaryFunc: WaitablePrimaryFunction<number> = jest.fn(({ setSuccess }) => {
+        const waitablePrimaryFunc = jest.fn<WaitablePrimaryFunction<number>>(({ setSuccess }) => {
           setSuccess(1);
         });
         const waitable = useWaitable<number>(waitablePrimaryFunc, { id: 'test', lockedUntil: [unlock1, unlock2] });
@@ -173,7 +174,7 @@ describe('useWaitable', () => {
       runInDom(({ onMount }) => {
         const lock = useBinding(() => true, { id: 'lock' });
         const unlock = useBinding(() => false, { id: 'unlock' });
-        const waitablePrimaryFunc: WaitablePrimaryFunction<number> = jest.fn(({ setSuccess }) => {
+        const waitablePrimaryFunc = jest.fn<WaitablePrimaryFunction<number>>(({ setSuccess }) => {
           setSuccess(1);
         });
         const waitable = useWaitable<number>(waitablePrimaryFunc, { id: 'test', lockedWhile: lock, lockedUntil: unlock });

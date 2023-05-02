@@ -1,11 +1,15 @@
+import { jest } from '@jest/globals';
+
 import { runInDom, sleep } from '../../__test_dependency__';
 import { useWaitableFunction } from '../../specialized-waitables/use-waitable-function';
+import type { IfNotReadyCallback } from '../types/internal/if-not-ready-callback';
+import type { IfReadyCallback } from '../types/internal/if-ready-callback';
 import { useWaitableCallback } from '../use-waitable-callback';
 
 describe('useWaitableCallback', () => {
   it('should work with undefined dependencies', () =>
     runInDom(({ onMount }) => {
-      const ifReadyCallback = jest.fn();
+      const ifReadyCallback = jest.fn<IfReadyCallback<[], undefined>>();
       const myWaitableCallback = useWaitableCallback(undefined, ifReadyCallback);
 
       onMount(async () => {
@@ -27,8 +31,8 @@ describe('useWaitableCallback', () => {
         { id: 'myWaitable' }
       );
 
-      const ifReadyCallback = jest.fn();
-      const ifNotReadyCallback = jest.fn();
+      const ifReadyCallback = jest.fn<IfReadyCallback<[], typeof myWaitable>>();
+      const ifNotReadyCallback = jest.fn<IfNotReadyCallback<[], typeof myWaitable>>();
       const myWaitableCallback = useWaitableCallback(myWaitable, ifReadyCallback, { timeoutMSec: 0, ifNotReady: ifNotReadyCallback });
 
       onMount(async () => {
@@ -59,8 +63,8 @@ describe('useWaitableCallback', () => {
         { id: 'myWaitable' }
       );
 
-      const ifReadyCallback = jest.fn();
-      const ifNotReadyCallback = jest.fn();
+      const ifReadyCallback = jest.fn<IfReadyCallback<[], typeof myWaitable>>();
+      const ifNotReadyCallback = jest.fn<IfNotReadyCallback<[], typeof myWaitable>>();
       const myWaitableCallback = useWaitableCallback(myWaitable, ifReadyCallback, { ifNotReady: ifNotReadyCallback });
 
       onMount(async () => {

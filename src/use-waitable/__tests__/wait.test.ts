@@ -1,3 +1,5 @@
+import { jest } from '@jest/globals';
+
 import { runInDom, sleep } from '../../__test_dependency__';
 import type { WaitablePrimaryFunction } from '../types/primary-function';
 import { useWaitable } from '../use-waitable';
@@ -5,7 +7,7 @@ import { useWaitable } from '../use-waitable';
 describe('useWaitable', () => {
   it('wait should resolve once waitable has value', () =>
     runInDom(({ onMount }) => {
-      const waitablePrimaryFunc: WaitablePrimaryFunction<number> = jest.fn(async ({ setSuccess }) => {
+      const waitablePrimaryFunc = jest.fn<WaitablePrimaryFunction<number>>(async ({ setSuccess }) => {
         await sleep(300);
         setSuccess(1);
       });
@@ -26,7 +28,7 @@ describe('useWaitable', () => {
 
   it('wait should timeout if not given enough time to run', () =>
     runInDom(({ onMount }) => {
-      const waitablePrimaryFunc: WaitablePrimaryFunction<number> = jest.fn(async ({ setSuccess }) => {
+      const waitablePrimaryFunc = jest.fn<WaitablePrimaryFunction<number>>(async ({ setSuccess }) => {
         await sleep(300);
         setSuccess(1);
       });
@@ -43,7 +45,7 @@ describe('useWaitable', () => {
 
   it("wait should get back 'reset' if the waitable is reset before completion and continueWaitingOnReset=false", () =>
     runInDom(({ onMount }) => {
-      const waitablePrimaryFunc: WaitablePrimaryFunction<number> = jest.fn(async ({ setSuccess }) => {
+      const waitablePrimaryFunc = jest.fn<WaitablePrimaryFunction<number>>(async ({ setSuccess }) => {
         await sleep(300);
         setSuccess(1);
       });
@@ -65,7 +67,7 @@ describe('useWaitable', () => {
 
   it("wait should get back 'success' if the waitable is reset before completion and continueWaitingOnReset=true", () =>
     runInDom(({ onMount }) => {
-      const waitablePrimaryFunc: WaitablePrimaryFunction<number> = jest.fn(async ({ setSuccess }) => {
+      const waitablePrimaryFunc = jest.fn<WaitablePrimaryFunction<number>>(async ({ setSuccess }) => {
         await sleep(300);
         setSuccess(1);
       });
@@ -87,7 +89,7 @@ describe('useWaitable', () => {
 
   it("wait should get back 'failure' if the waitable has an error", () =>
     runInDom(({ onMount }) => {
-      const waitablePrimaryFunc: WaitablePrimaryFunction<number> = jest.fn(async ({ setFailure }) => {
+      const waitablePrimaryFunc = jest.fn<WaitablePrimaryFunction<number>>(async ({ setFailure }) => {
         await sleep(300);
         setFailure(1);
       });

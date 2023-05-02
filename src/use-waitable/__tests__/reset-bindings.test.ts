@@ -1,3 +1,4 @@
+import { jest } from '@jest/globals';
 import { waitFor } from '@testing-library/react';
 import { useBinding } from 'react-bindings';
 
@@ -11,7 +12,7 @@ describe('useWaitable', () => {
     it('hard reset waitables should be cleared and then resolved after being given enough time to run', () =>
       runInDom(({ onMount }) => {
         const echo = useBinding(() => 1, { id: 'echo' });
-        const waitablePrimaryFunc: WaitablePrimaryFunction<number> = jest.fn(({ setSuccess }) => {
+        const waitablePrimaryFunc = jest.fn<WaitablePrimaryFunction<number>>(({ setSuccess }) => {
           setSuccess(echo.get());
         });
         const onReset: UseWaitableOnResetCallback = jest.fn();
@@ -48,7 +49,7 @@ describe('useWaitable', () => {
       runInDom(({ onMount }) => {
         const a = useBinding(() => 1, { id: 'a' });
         const b = useBinding(() => 2, { id: 'b' });
-        const waitablePrimaryFunc: WaitablePrimaryFunction<number> = jest.fn(async ({ setSuccess }) => {
+        const waitablePrimaryFunc = jest.fn<WaitablePrimaryFunction<number>>(async ({ setSuccess }) => {
           await sleep(50);
 
           setSuccess(a.get() + b.get());
@@ -86,7 +87,7 @@ describe('useWaitable', () => {
     it('soft reset waitables should be not be cleared but should be updated with new values after being given enough time to run', () =>
       runInDom(({ onMount }) => {
         const echo = useBinding(() => 1, { id: 'echo' });
-        const waitablePrimaryFunc: WaitablePrimaryFunction<number> = jest.fn(({ setSuccess }) => {
+        const waitablePrimaryFunc = jest.fn<WaitablePrimaryFunction<number>>(({ setSuccess }) => {
           setSuccess(echo.get());
         });
         const onReset: UseWaitableOnResetCallback = jest.fn();
@@ -124,7 +125,7 @@ describe('useWaitable', () => {
     it('hard reset waitables should be cleared and then resolved after being given enough time to run', () =>
       runInDom(({ onMount }) => {
         const echo = useBinding(() => 1, { id: 'echo' });
-        const waitablePrimaryFunc: WaitablePrimaryFunction<number> = jest.fn(({ setSuccess }) => {
+        const waitablePrimaryFunc = jest.fn<WaitablePrimaryFunction<number>>(({ setSuccess }) => {
           setSuccess(echo.get());
         });
         const onReset: UseWaitableOnResetCallback = jest.fn();
@@ -156,7 +157,7 @@ describe('useWaitable', () => {
       runInDom(({ onMount }) => {
         const a = useBinding(() => 1, { id: 'a' });
         const b = useBinding(() => 2, { id: 'b' });
-        const waitablePrimaryFunc: WaitablePrimaryFunction<number> = jest.fn(async ({ setSuccess }) => {
+        const waitablePrimaryFunc = jest.fn<WaitablePrimaryFunction<number>>(async ({ setSuccess }) => {
           await sleep(50);
 
           setSuccess(a.get() + b.get());
@@ -199,7 +200,7 @@ describe('useWaitable', () => {
     it('soft reset waitables should be not be cleared but should be updated with new values after being given enough time to run', () =>
       runInDom(({ onMount }) => {
         const echo = useBinding(() => 1, { id: 'echo' });
-        const waitablePrimaryFunc: WaitablePrimaryFunction<number> = jest.fn(({ setSuccess }) => {
+        const waitablePrimaryFunc = jest.fn<WaitablePrimaryFunction<number>>(({ setSuccess }) => {
           setSuccess(echo.get());
         });
         const onReset: UseWaitableOnResetCallback = jest.fn();
@@ -233,7 +234,7 @@ describe('useWaitable', () => {
 
     it('manually hard reset waitables should be cleared and then resolved after being given enough time to run', () =>
       runInDom(({ onMount }) => {
-        const waitablePrimaryFunc: WaitablePrimaryFunction<number> = jest.fn(({ setSuccess }) => {
+        const waitablePrimaryFunc = jest.fn<WaitablePrimaryFunction<number>>(({ setSuccess }) => {
           setSuccess(1);
         });
         const onReset: UseWaitableOnResetCallback = jest.fn();
@@ -268,7 +269,7 @@ describe('useWaitable', () => {
 
     it('manually soft reset waitables should be cleared and then resolved after being given enough time to run', () =>
       runInDom(({ onMount }) => {
-        const waitablePrimaryFunc: WaitablePrimaryFunction<number> = jest.fn(({ setSuccess }) => {
+        const waitablePrimaryFunc = jest.fn<WaitablePrimaryFunction<number>>(({ setSuccess }) => {
           setSuccess(1);
         });
         const onReset: UseWaitableOnResetCallback = jest.fn();

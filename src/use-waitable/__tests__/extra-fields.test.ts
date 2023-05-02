@@ -1,3 +1,4 @@
+import { jest } from '@jest/globals';
 import { waitFor } from '@testing-library/react';
 
 import { runInDom, sleep } from '../../__test_dependency__';
@@ -7,7 +8,7 @@ import { useWaitable } from '../use-waitable';
 describe('useWaitable', () => {
   it('extra fields should work', () =>
     runInDom(({ onMount }) => {
-      const waitablePrimaryFunc: WaitablePrimaryFunction<number> = jest.fn(async ({ setSuccess }) => {
+      const waitablePrimaryFunc = jest.fn<WaitablePrimaryFunction<number>>(async ({ setSuccess }) => {
         await sleep(50);
         setSuccess(1);
       });

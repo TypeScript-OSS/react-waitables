@@ -1,3 +1,4 @@
+import { jest } from '@jest/globals';
 import { waitFor } from '@testing-library/react';
 import type { ComponentType } from 'react';
 import React from 'react';
@@ -15,7 +16,7 @@ describe('useWaitable', () => {
 
       let waitable: Waitable<number> | undefined;
 
-      const waitablePrimaryFunc: WaitablePrimaryFunction<number> = jest.fn(async ({ setSuccess }) => {
+      const waitablePrimaryFunc = jest.fn<WaitablePrimaryFunction<number>>(async ({ setSuccess }) => {
         await sleep(50);
         setSuccess(1);
       });
@@ -54,7 +55,7 @@ describe('useWaitable', () => {
 
       let waitable: Waitable<number> | undefined;
 
-      const waitablePrimaryFunc: WaitablePrimaryFunction<number> = jest.fn(async ({ setSuccess }) => {
+      const waitablePrimaryFunc = jest.fn<WaitablePrimaryFunction<number>>(async ({ setSuccess }) => {
         await sleep(50);
         setSuccess(1);
       });
