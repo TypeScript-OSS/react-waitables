@@ -191,7 +191,7 @@ export const useWaitable = <SuccessT, FailureT = any, ExtraFieldsT extends objec
    * - isn't locked
    */
   const execPrimaryFuncIfNeeded = useCallbackRef(() => {
-    if (alreadyRanFunc.current || !isMounted.current) {
+    if (alreadyRanFunc.current || !(isMounted.current ?? false)) {
       return;
     }
 
@@ -246,7 +246,7 @@ export const useWaitable = <SuccessT, FailureT = any, ExtraFieldsT extends objec
   }
 
   // If already mounted, scheduling right away if needed
-  if (isMounted.current) {
+  if (isMounted.current ?? false) {
     scheduleIfNeeded();
   }
 

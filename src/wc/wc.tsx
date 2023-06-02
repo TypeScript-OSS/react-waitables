@@ -3,6 +3,7 @@ import type { SingleOrArray } from 'react-bindings';
 
 import type {
   WaitablesConsumerNamedTransformers,
+  WaitablesConsumerOptionalValuesTransformer,
   WaitablesConsumerRequiredValuesTransformer
 } from '../components/WaitablesConsumer/types/transformers';
 import { WaitablesConsumer } from '../components/WaitablesConsumer/WaitablesConsumer';
@@ -12,5 +13,10 @@ import type { WaitableDependencies } from '../waitable/types/waitable-dependenci
  * components */
 export const WC = <DependenciesT extends WaitableDependencies>(
   dependencies: DependenciesT,
-  children: SingleOrArray<WaitablesConsumerRequiredValuesTransformer<DependenciesT> | WaitablesConsumerNamedTransformers<DependenciesT>>
-) => <WaitablesConsumer dependencies={dependencies}>{children}</WaitablesConsumer>;
+  children: SingleOrArray<WaitablesConsumerRequiredValuesTransformer<DependenciesT> | WaitablesConsumerNamedTransformers<DependenciesT>>,
+  ifLoading?: WaitablesConsumerOptionalValuesTransformer<DependenciesT>
+) => (
+  <WaitablesConsumer dependencies={dependencies} ifLoading={ifLoading}>
+    {children}
+  </WaitablesConsumer>
+);
