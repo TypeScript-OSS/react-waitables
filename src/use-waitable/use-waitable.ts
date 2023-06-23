@@ -1,7 +1,16 @@
 import { DEFAULT_PRIORITY } from 'client-run-queue';
 import { useMemo, useRef } from 'react';
 import type { EmptyObject, ReadonlyBinding } from 'react-bindings';
-import { areEqual, useBinding, useBindingEffect, useCallbackRef, useDefaultQueue, useDerivedBinding, useLimiter } from 'react-bindings';
+import {
+  areEqual,
+  useBinding,
+  useBindingEffect,
+  useCallbackRef,
+  useDefaultQueue,
+  useDerivedBinding,
+  useLimiter,
+  useTransientDerivedBinding
+} from 'react-bindings';
 
 import { isSpecialLoggingEnabledFor } from '../config/logging';
 import { useIsMountedRef } from '../internal-hooks/use-is-mounted-ref';
@@ -88,17 +97,16 @@ export const useWaitable = <SuccessT, FailureT = any, ExtraFieldsT extends objec
   const isBusy = useBinding(() => false, { id: 'isBusy', detectChanges: true });
 
   /**
-   * If true, either the `value` or `error` binding have defined values
+   * If true, either the `value` or `error` binding have defined values.
    *
-   * We don't detect input or output changes here because we want isComplete to notify if, for example, we switch between two complete
-   * values -- such as when a default value is set and then an value is resolved from the primary function.
+   * This is a transient derived binding because we want it to have an up-to-date value, even when unmounted (since default value updates to
+   * value, for example, can happen asynchronously while unmounted).
    */
-  const isComplete = useDerivedBinding({ error, value }, ({ error, value }): boolean => value !== undefined || error !== undefined, {
-    id: `${id}_isComplete`,
-    limitType: 'none',
-    detectInputChanges: false,
-    detectOutputChanges: false
-  });
+  const isComplete = useTransientDerivedBinding(
+    { error, value },
+    ({ error, value }): boolean => value !== undefined || error !== undefined,
+    { id: `${id}_isComplete` }
+  );
 
   /** If true, the last time the primary function was attempted to be run, this waitable was locked */
   const lastExecAttemptWasLocked = useRef(false);
