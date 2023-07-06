@@ -1,12 +1,11 @@
-import { DEFAULT_PRIORITY } from 'client-run-queue';
 import { useMemo, useRef } from 'react';
 import type { EmptyObject, ReadonlyBinding } from 'react-bindings';
 import {
   areEqual,
+  pickLimiterOptions,
   useBinding,
   useBindingEffect,
   useCallbackRef,
-  useDefaultQueue,
   useDerivedBinding,
   useLimiter,
   useTransientDerivedBinding
@@ -48,7 +47,9 @@ const emptyBindingsArray = Object.freeze([]) as unknown as Array<ReadonlyBinding
  */
 export const useWaitable = <SuccessT, FailureT = any, ExtraFieldsT extends object = EmptyObject>(
   primaryFunc: WaitablePrimaryFunction<SuccessT, FailureT>,
-  {
+  args: UseWaitableArgs<SuccessT, FailureT, ExtraFieldsT>
+): Waitable<SuccessT, FailureT> & ExtraFieldsT => {
+  const {
     id,
     deps,
     addFields,
@@ -63,20 +64,12 @@ export const useWaitable = <SuccessT, FailureT = any, ExtraFieldsT extends objec
     defaultValue,
     onFailure,
     onReset,
-    onSuccess,
-    limitMSec,
-    limitMode,
-    limitType,
-    priority = DEFAULT_PRIORITY,
-    queue
-  }: UseWaitableArgs<SuccessT, FailureT, ExtraFieldsT>
-): Waitable<SuccessT, FailureT> & ExtraFieldsT => {
-  const limiterOptions = { limitMSec, limitMode, limitType, priority, queue };
+    onSuccess
+  } = args;
 
-  const defaultQueue = useDefaultQueue();
+  const limiterOptions = pickLimiterOptions(args);
+
   const isMounted = useIsMountedRef();
-
-  queue = queue ?? defaultQueue;
 
   /** The success value store */
   const value = useBinding<SuccessT | undefined>(() => undefined, {

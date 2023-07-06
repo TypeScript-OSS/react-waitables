@@ -1,13 +1,14 @@
 import type { ReactNode } from 'react';
 import React from 'react';
 import type { SingleOrArray } from 'react-bindings';
-import { BindingsConsumer, useCallbackRef } from 'react-bindings';
+import { BindingsConsumer, pickLimiterOptions, useCallbackRef } from 'react-bindings';
 
 import { getDefaultWaitablesConsumerIfErrorTransformer } from '../../config/waitable-consumer-if-error-transformer';
 import { normalizeAsArray } from '../../internal-utils/array-like';
 import { useDerivedWaitable } from '../../specialized-waitables/use-derived-waitable/use-derived-waitable';
 import type { Waitable } from '../../waitable/types/waitable';
 import type { WaitableDependencies } from '../../waitable/types/waitable-dependencies';
+import { pickWaitablesConsumerNamedTransformers } from './pick-waitables-consumer-named-transformers';
 import type { WaitablesConsumerProps } from './types/props';
 import type { WaitablesConsumerNamedTransformers, WaitablesConsumerRequiredValuesTransformer } from './types/transformers';
 
@@ -39,34 +40,15 @@ import type { WaitablesConsumerNamedTransformers, WaitablesConsumerRequiredValue
  *
  * If no transformers are applicable, nothing will be rendered.
  */
-export const WaitablesConsumer = <DependenciesT extends WaitableDependencies>({
-  children,
-  id = 'waitable-consumer',
-  dependencies,
-  // WaitablesConsumerNamedTransformers
-  always,
-  ifError,
-  ifErrorOrLoading,
-  ifLoaded,
-  ifLoading,
-  // LimiterOptions
-  limitMSec,
-  limitMode,
-  limitType,
-  priority,
-  queue
-}: WaitablesConsumerProps<DependenciesT> & {
-  children: SingleOrArray<WaitablesConsumerRequiredValuesTransformer<DependenciesT> | WaitablesConsumerNamedTransformers<DependenciesT>>;
-}) => {
-  const limiterOptions = { limitMSec, limitMode, limitType, priority, queue };
+export const WaitablesConsumer = <DependenciesT extends WaitableDependencies>(
+  props: WaitablesConsumerProps<DependenciesT> & {
+    children: SingleOrArray<WaitablesConsumerRequiredValuesTransformer<DependenciesT> | WaitablesConsumerNamedTransformers<DependenciesT>>;
+  }
+) => {
+  const { children, id = 'waitable-consumer', dependencies } = props;
 
-  const propsBasedTransformers: WaitablesConsumerNamedTransformers<DependenciesT> = {
-    always,
-    ifError,
-    ifErrorOrLoading,
-    ifLoaded,
-    ifLoading
-  };
+  const limiterOptions = pickLimiterOptions(props);
+  const propsBasedTransformers = pickWaitablesConsumerNamedTransformers<DependenciesT>(props);
 
   const ifErrorTransformer = useCallbackRef((): ReactNode => getDefaultWaitablesConsumerIfErrorTransformer()?.(dependencies, node) ?? null);
 
@@ -74,8 +56,8 @@ export const WaitablesConsumer = <DependenciesT extends WaitableDependencies>({
 
   const node: Waitable<ReactNode> = useDerivedWaitable(dependencies, combinedTransformers, {
     id,
-    priority,
-    queue,
+    priority: limiterOptions.priority,
+    queue: limiterOptions.queue,
     detectErrorChanges: false,
     detectValueChanges: false
   });
