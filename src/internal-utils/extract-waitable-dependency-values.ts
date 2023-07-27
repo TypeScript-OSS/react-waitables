@@ -62,7 +62,7 @@ const extractValue = <T, FailureT>(
   inout: { allWaitablesAreLoaded: boolean; anyWaitablesHadErrors: boolean; lastError?: FailureT }
 ): T | undefined => {
   if (isWaitable(dependency)) {
-    const value = dependency.value.get();
+    const value = (dependency as Waitable<T>).value.get();
     if (value === undefined) {
       inout.allWaitablesAreLoaded = false;
 

@@ -1,7 +1,8 @@
-import type { ReadonlyBinding } from 'react-bindings';
+import type { Binding, ReadonlyBinding } from 'react-bindings';
 
 import type { ResetType } from './reset';
 import type { WaitOptions, WaitResult } from './wait';
+import type { WrappedResult } from './wrapped-result';
 
 /**
  * A state representation for a value or error producing, synchronous or asynchronous, function, which may:
@@ -24,6 +25,9 @@ export interface Waitable<SuccessT, FailureT = any> {
   value: ReadonlyBinding<SuccessT | undefined>;
   /** The failure value or undefined if either incomplete or completed successfully. */
   error: ReadonlyBinding<FailureT | undefined>;
+
+  /** This can be used to force the waitable to have a specified value or error -- usually for testing. */
+  force: Binding<WrappedResult<SuccessT, FailureT> | undefined>;
 
   /** If `true`, the primary function is being run / waited for */
   isBusy: ReadonlyBinding<boolean>;

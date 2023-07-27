@@ -11,6 +11,7 @@ import {
   useTransientDerivedBinding
 } from 'react-bindings';
 
+import type { WrappedResult } from '..';
 import { isSpecialLoggingEnabledFor } from '../config/logging';
 import { useIsMountedRef } from '../internal-hooks/use-is-mounted-ref';
 import { normalizeAsArray } from '../internal-utils/array-like';
@@ -83,6 +84,35 @@ export const useWaitable = <SuccessT, FailureT = any, ExtraFieldsT extends objec
     areEqual: areErrorsEqual,
     detectChanges: detectErrorChanges
   });
+
+  const force = useBinding<WrappedResult<SuccessT, FailureT> | undefined>(() => undefined, { id: `${id}_force` });
+  useBindingEffect(
+    force,
+    (force) => {
+      if (force === undefined) {
+        reset('hard');
+      } else {
+        updateWaitableBindingsWithPrimaryFunction({
+          id,
+          primaryFunc: ({ setSuccess, setFailure }) => {
+            if (force.ok) {
+              setSuccess(force.value);
+            } else {
+              setFailure(force.value);
+            }
+          },
+          isBusy,
+          error,
+          value,
+          alreadyRanFunc,
+          resetCount,
+          onFailure,
+          onSuccess
+        });
+      }
+    },
+    { limitType: 'none' }
+  );
 
   /** If true, the primary function has already been started and won't run again */
   const alreadyRanFunc = useRef(false);
@@ -257,6 +287,7 @@ export const useWaitable = <SuccessT, FailureT = any, ExtraFieldsT extends objec
       id,
       value,
       error,
+      force,
       isBusy,
       isComplete,
       isLocked,
@@ -264,7 +295,7 @@ export const useWaitable = <SuccessT, FailureT = any, ExtraFieldsT extends objec
       reset,
       wait
     }),
-    [error, id, isBusy, isComplete, isLocked, isLockedWithoutValue, reset, value, wait]
+    [error, force, id, isBusy, isComplete, isLocked, isLockedWithoutValue, reset, value, wait]
   ) as Waitable<SuccessT, FailureT> & ExtraFieldsT;
   const extraFields = addFields?.(output);
   if (extraFields !== undefined) {
