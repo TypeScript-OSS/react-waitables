@@ -52,13 +52,13 @@ export const updateWaitableBindingsWithPrimaryFunction = <SuccessT, FailureT>({
           return false; // Ignoring this result since there was a reset after this function was called
         }
 
-        onSuccess?.(successValue);
-
         value.set(successValue);
         if (error.get() !== undefined) {
           error.set(undefined);
         }
         isBusy.set(false);
+
+        onSuccess?.(successValue);
 
         return true;
       },
@@ -67,10 +67,10 @@ export const updateWaitableBindingsWithPrimaryFunction = <SuccessT, FailureT>({
           return false; // Ignoring this result since there was a reset after this function was called
         }
 
-        onFailure?.(errorValue);
-
         error.set(errorValue);
         isBusy.set(false);
+
+        onFailure?.(errorValue);
 
         return true;
       },
