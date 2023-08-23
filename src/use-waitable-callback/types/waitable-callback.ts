@@ -9,6 +9,8 @@ export interface WaitableCallback<ArgsT extends any[]> {
   isReady: ReadonlyBinding<boolean>;
   /** The opposite of `isReady` */
   isNotReady: ReadonlyBinding<boolean>;
+  /** Creates a WaitableCallback with pre-bound args */
+  bindArgs: (...args: ArgsT) => WaitableCallback<[]>;
 
   (...args: ArgsT): TypeOrPromisedType<WaitResult>;
 }

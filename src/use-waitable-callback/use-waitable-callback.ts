@@ -52,6 +52,13 @@ export const useWaitableCallback = <ArgsT extends any[], DependenciesT extends W
 
   output.isReady = isReady;
   output.isNotReady = isNotReady;
+  output.bindArgs = (...args: ArgsT) => {
+    const boundOutput = (() => output(...args)) as WaitableCallback<[]>;
+    boundOutput.isReady = output.isReady;
+    boundOutput.isNotReady = output.isNotReady;
+    boundOutput.bindArgs = () => boundOutput;
+    return boundOutput;
+  };
 
   return output;
 };
