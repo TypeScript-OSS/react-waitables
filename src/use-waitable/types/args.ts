@@ -75,10 +75,10 @@ export interface UseWaitableArgs<SuccessT, FailureT = any, ExtraFieldsT extends 
 
   /**
    * This can be used to generate a default value, which will be used to initialize the value and whenever this waitable is hard reset.  You
-   * may alternatively, specify `'use-primary-function'`, in which case the primary function will be called immediately on initialization or
-   * reset.
+   * may alternatively, specify `'use-primary-function'` or `'use-primary-function-if-unlocked'`, in which case the primary function will be
+   * called immediately on initialization or reset.
    */
-  defaultValue?: UseWaitableDefaultValueProducer<SuccessT> | 'use-primary-function';
+  defaultValue?: UseWaitableDefaultValueProducer<SuccessT> | 'use-primary-function' | 'use-primary-function-if-unlocked';
 
   /**
    * Called each time `setFailure` is called (except if the call to `setFailure` is ignored, ex. due to a reset or when an error occurs when

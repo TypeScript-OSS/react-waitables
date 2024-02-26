@@ -43,8 +43,9 @@ const emptyBindingsArray = Object.freeze([]) as unknown as Array<ReadonlyBinding
  * If a primary function throws, the waitable will no longer be busy, but the state won't otherwise change and the primary function won't
  * automatically be rerun.
  *
- * During default value generation, if an error occurs, either thrown or via `setFailure` if using `defaultValue='use-primary-function'`,
- * `reset('soft')` is automatically called so the primary function can be run again as applicable.
+ * During default value generation, if an error occurs, either thrown or via `setFailure` if using `defaultValue='use-primary-function'` or
+ * `defaultValue='use-primary-function-if-unlocked'`, `reset('soft')` is automatically called so the primary function can be run again as
+ * applicable.
  */
 export const useWaitable = <SuccessT, FailureT = any, ExtraFieldsT extends object = EmptyObject>(
   primaryFunc: WaitablePrimaryFunction<SuccessT, FailureT>,
@@ -162,6 +163,21 @@ export const useWaitable = <SuccessT, FailureT = any, ExtraFieldsT extends objec
         softReset,
         onSuccess
       });
+    } else if (defaultValue === 'use-primary-function-if-unlocked') {
+      if (!isLocked.get()) {
+        return updateWaitableBindingsWithPrimaryFunctionForDefaultValue({
+          primaryFunc,
+          isBusy,
+          error,
+          value,
+          alreadyRanFunc,
+          resetCount,
+          softReset,
+          onSuccess
+        });
+      } else {
+        return updateWaitableBindingsWithDefaultValueProducer({ areValuesEqual, defaultValue: undefined, error, value });
+      }
     } else {
       return updateWaitableBindingsWithDefaultValueProducer({ areValuesEqual, defaultValue, error, value });
     }

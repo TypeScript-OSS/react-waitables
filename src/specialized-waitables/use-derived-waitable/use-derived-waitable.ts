@@ -211,7 +211,7 @@ export const useDerivedWaitable = <
   });
 
   return useWaitable<SuccessT, FailureT, ExtraFieldsT>(evaluate, {
-    defaultValue: 'use-primary-function',
+    defaultValue: 'use-primary-function-if-unlocked',
     ...args,
     hardResetBindings: concatArrays(
       normalizeAsOptionalArray(args.hardResetBindings) ?? emptyHardResetBindings,

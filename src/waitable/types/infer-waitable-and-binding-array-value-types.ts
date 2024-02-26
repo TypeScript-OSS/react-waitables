@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import type { InferBindingGetType, ReadonlyBinding } from 'react-bindings';
 
 import type { InferWaitableSuccessType } from './inference';
