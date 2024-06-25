@@ -1,7 +1,8 @@
 import { waitFor } from '@testing-library/react';
 import { makeConstBinding } from 'react-bindings';
 
-import { runInDom, sleep } from '../../__test_dependency__/index.js';
+import { runInDom } from '../../__test_dependency__/run-in-dom.js';
+import { sleep } from '../../__test_dependency__/sleep.js';
 import { useWaitableFunction } from '../../specialized-waitables/use-waitable-function.js';
 import { extractOptionalWaitableDependencyValues } from '../extract-waitable-dependency-values.js';
 

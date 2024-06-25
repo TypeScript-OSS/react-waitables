@@ -2,7 +2,8 @@ import { jest } from '@jest/globals';
 import { waitFor } from '@testing-library/react';
 import { useBinding } from 'react-bindings';
 
-import { runInDom, sleep } from '../../__test_dependency__/index.js';
+import { runInDom } from '../../__test_dependency__/run-in-dom.js';
+import { sleep } from '../../__test_dependency__/sleep.js';
 import type { UseWaitableOnResetCallback } from '../types/args';
 import type { WaitablePrimaryFunction } from '../types/primary-function';
 import { useWaitable } from '../use-waitable.js';

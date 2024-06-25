@@ -1,6 +1,6 @@
 import { jest } from '@jest/globals';
 
-import { sleep } from '../../__test_dependency__/index.js';
+import { sleep } from '../../__test_dependency__/sleep.js';
 import { makeValueThenDo } from '../make-value-then-do.js';
 
 describe('makeValueThenDo', () => {

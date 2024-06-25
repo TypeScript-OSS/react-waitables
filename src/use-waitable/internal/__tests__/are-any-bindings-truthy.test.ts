@@ -1,6 +1,6 @@
 import { useBinding } from 'react-bindings';
 
-import { runInDom } from '../../../__test_dependency__/index.js';
+import { runInDom } from '../../../__test_dependency__/run-in-dom.js';
 import { areAnyBindingsTruthy } from '../are-any-bindings-truthy.js';
 
 describe('areAnyBindingsTruthy', () => {

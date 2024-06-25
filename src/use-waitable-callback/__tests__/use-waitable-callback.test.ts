@@ -1,6 +1,7 @@
 import { jest } from '@jest/globals';
 
-import { runInDom, sleep } from '../../__test_dependency__/index.js';
+import { runInDom } from '../../__test_dependency__/run-in-dom.js';
+import { sleep } from '../../__test_dependency__/sleep.js';
 import { useWaitableFunction } from '../../specialized-waitables/use-waitable-function.js';
 import type { IfNotReadyCallback } from '../types/internal/if-not-ready-callback';
 import type { IfReadyCallback } from '../types/internal/if-ready-callback';

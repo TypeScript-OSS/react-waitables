@@ -4,7 +4,8 @@ import type { ComponentType } from 'react';
 import React from 'react';
 import { BindingsConsumer, useBinding } from 'react-bindings';
 
-import { runInDom, sleep } from '../../__test_dependency__/index.js';
+import { runInDom } from '../../__test_dependency__/run-in-dom.js';
+import { sleep } from '../../__test_dependency__/sleep.js';
 import type { Waitable } from '../../waitable/types/waitable';
 import type { WaitablePrimaryFunction } from '../types/primary-function';
 import { useWaitable } from '../use-waitable.js';

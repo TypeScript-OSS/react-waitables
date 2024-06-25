@@ -1,6 +1,6 @@
 import { waitFor } from '@testing-library/react';
 
-import { runInDom } from '../../../__test_dependency__/index.js';
+import { runInDom } from '../../../__test_dependency__/run-in-dom.js';
 import { useWaitableFunction } from '../../use-waitable-function.js';
 import { useDerivedWaitable } from '../use-derived-waitable.js';
 
