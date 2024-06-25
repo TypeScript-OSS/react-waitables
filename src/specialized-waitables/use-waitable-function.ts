@@ -1,9 +1,9 @@
 import type { EmptyObject } from 'react-bindings';
 
-import { makeValueWithArgsThenDo } from '../internal-utils/make-value-with-args-then-do';
+import { makeValueWithArgsThenDo } from '../internal-utils/make-value-with-args-then-do.js';
 import type { TypeOrPromisedType } from '../resolveable/types';
 import type { UseWaitableArgs } from '../use-waitable/types/args';
-import { useWaitable } from '../use-waitable/use-waitable';
+import { useWaitable } from '../use-waitable/use-waitable.js';
 import type { WrappedResult } from '../waitable/types/wrapped-result';
 
 /**

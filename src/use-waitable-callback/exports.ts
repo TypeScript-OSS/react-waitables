@@ -1,2 +1,2 @@
-export * from './types/exports';
-export * from './use-waitable-callback';
+export * from './types/exports.js';
+export * from './use-waitable-callback.js';

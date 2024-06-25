@@ -1,8 +1,8 @@
 import { jest } from '@jest/globals';
 
-import { runInDom, sleep } from '../../__test_dependency__';
+import { runInDom, sleep } from '../../__test_dependency__/index.js';
 import type { WaitablePrimaryFunction } from '../types/primary-function';
-import { useWaitable } from '../use-waitable';
+import { useWaitable } from '../use-waitable.js';
 
 describe('useWaitable', () => {
   it('wait should resolve once waitable has value', () =>

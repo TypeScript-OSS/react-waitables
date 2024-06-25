@@ -1,2 +1,2 @@
-export * from './props';
-export * from './transformers';
+export * from './props.js';
+export * from './transformers.js';

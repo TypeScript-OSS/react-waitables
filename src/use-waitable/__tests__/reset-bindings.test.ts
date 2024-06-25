@@ -2,10 +2,10 @@ import { jest } from '@jest/globals';
 import { waitFor } from '@testing-library/react';
 import { useBinding } from 'react-bindings';
 
-import { runInDom, sleep } from '../../__test_dependency__';
+import { runInDom, sleep } from '../../__test_dependency__/index.js';
 import type { UseWaitableOnResetCallback } from '../types/args';
 import type { WaitablePrimaryFunction } from '../types/primary-function';
-import { useWaitable } from '../use-waitable';
+import { useWaitable } from '../use-waitable.js';
 
 describe('useWaitable', () => {
   describe('without default value', () => {

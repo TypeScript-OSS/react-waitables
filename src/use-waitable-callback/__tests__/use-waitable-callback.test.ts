@@ -1,10 +1,10 @@
 import { jest } from '@jest/globals';
 
-import { runInDom, sleep } from '../../__test_dependency__';
-import { useWaitableFunction } from '../../specialized-waitables/use-waitable-function';
+import { runInDom, sleep } from '../../__test_dependency__/index.js';
+import { useWaitableFunction } from '../../specialized-waitables/use-waitable-function.js';
 import type { IfNotReadyCallback } from '../types/internal/if-not-ready-callback';
 import type { IfReadyCallback } from '../types/internal/if-ready-callback';
-import { useWaitableCallback } from '../use-waitable-callback';
+import { useWaitableCallback } from '../use-waitable-callback.js';
 
 describe('useWaitableCallback', () => {
   it('should work with undefined dependencies', () =>

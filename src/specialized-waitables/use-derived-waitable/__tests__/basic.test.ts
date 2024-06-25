@@ -1,9 +1,9 @@
 import { waitFor } from '@testing-library/react';
 import { useBinding } from 'react-bindings';
 
-import { runInDom, sleep } from '../../../__test_dependency__';
-import { useWaitableFunction } from '../../use-waitable-function';
-import { useDerivedWaitable } from '../use-derived-waitable';
+import { runInDom, sleep } from '../../../__test_dependency__/index.js';
+import { useWaitableFunction } from '../../use-waitable-function.js';
+import { useDerivedWaitable } from '../use-derived-waitable.js';
 
 describe('useDerivedWaitable', () => {
   it('with undefined dependencies and synchronous primary function should be resolved immediately', () =>

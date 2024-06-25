@@ -1,2 +1,2 @@
-export * from './options';
-export * from './waitable-callback';
+export * from './options.js';
+export * from './waitable-callback.js';

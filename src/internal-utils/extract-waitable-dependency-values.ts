@@ -4,7 +4,7 @@ import { isBinding } from 'react-bindings';
 import type { InferOptionalWaitableAndBindingValueTypes } from '../waitable/types/infer-waitable-and-binding-value-types';
 import type { Waitable } from '../waitable/types/waitable';
 import type { NamedWaitableDependencies, WaitableDependencies } from '../waitable/types/waitable-dependencies';
-import { isWaitable } from '../waitable/utils';
+import { isWaitable } from '../waitable/utils.js';
 
 export const extractOptionalWaitableDependencyValues = <DependenciesT extends WaitableDependencies, FailureT>({
   dependencies,
@@ -37,7 +37,6 @@ export const extractOptionalWaitableDependencyValues = <DependenciesT extends Wa
         ) as InferOptionalWaitableAndBindingValueTypes<DependenciesT>
       );
     } else {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       return makeOutput(extractValue(dependencies, inout) as InferOptionalWaitableAndBindingValueTypes<DependenciesT>);
     }
   } else if (namedDependencyKeys !== undefined) {
@@ -47,10 +46,8 @@ export const extractOptionalWaitableDependencyValues = <DependenciesT extends Wa
       namedValues[key] = extractValue((dependencies as NamedWaitableDependencies)[key], inout);
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return makeOutput(namedValues as InferOptionalWaitableAndBindingValueTypes<DependenciesT>);
   } else {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return makeOutput(undefined as InferOptionalWaitableAndBindingValueTypes<DependenciesT>);
   }
 };

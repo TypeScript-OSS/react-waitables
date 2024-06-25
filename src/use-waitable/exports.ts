@@ -1,2 +1,2 @@
-export * from './types/exports';
-export * from './use-waitable';
+export * from './types/exports.js';
+export * from './use-waitable.js';

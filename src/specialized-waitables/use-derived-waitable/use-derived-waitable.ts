@@ -2,20 +2,20 @@ import { useMemo } from 'react';
 import type { EmptyObject, ReadonlyBinding, SingleOrArray } from 'react-bindings';
 import { isBinding, useCallbackRef, useStableValue } from 'react-bindings';
 
-import { concatArrays, normalizeAsArray, normalizeAsOptionalArray } from '../../internal-utils/array-like';
-import { extractOptionalWaitableDependencyValues } from '../../internal-utils/extract-waitable-dependency-values';
-import { getTypedKeys } from '../../internal-utils/get-typed-keys';
-import { makeValueThenDo } from '../../internal-utils/make-value-then-do';
+import { concatArrays, normalizeAsArray, normalizeAsOptionalArray } from '../../internal-utils/array-like.js';
+import { extractOptionalWaitableDependencyValues } from '../../internal-utils/extract-waitable-dependency-values.js';
+import { getTypedKeys } from '../../internal-utils/get-typed-keys.js';
+import { makeValueThenDo } from '../../internal-utils/make-value-then-do.js';
 import type { UseWaitableArgs } from '../../use-waitable/types/args';
 import type { WaitablePrimaryFunction } from '../../use-waitable/types/primary-function';
-import { useWaitable } from '../../use-waitable/use-waitable';
+import { useWaitable } from '../../use-waitable/use-waitable.js';
 import type {
   InferOptionalWaitableAndBindingValueTypes,
   InferRequiredWaitableAndBindingValueTypes
 } from '../../waitable/types/infer-waitable-and-binding-value-types';
 import type { Waitable } from '../../waitable/types/waitable';
 import type { WaitableDependencies } from '../../waitable/types/waitable-dependencies';
-import { isWaitable } from '../../waitable/utils';
+import { isWaitable } from '../../waitable/utils.js';
 import type { UseDerivedWaitableNamedTransformers, UseDerivedWaitableRequiredValuesTransformer } from './types/transformers';
 
 const emptyDependencies = Object.freeze({} as EmptyObject);

@@ -6,7 +6,7 @@ import type {
   WaitablesConsumerOptionalValuesTransformer,
   WaitablesConsumerRequiredValuesTransformer
 } from '../components/WaitablesConsumer/types/transformers';
-import { WaitablesConsumer } from '../components/WaitablesConsumer/WaitablesConsumer';
+import { WaitablesConsumer } from '../components/WaitablesConsumer/WaitablesConsumer.js';
 import type { WaitableDependencies } from '../waitable/types/waitable-dependencies';
 
 /** Returns a WaitablesConsumer JSX Element.  This is useful as a shorthand especially when passing WaitablesConsumer as props of other

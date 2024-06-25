@@ -1,4 +1,4 @@
 /* istanbul ignore file */
 
-export * from './logging';
-export * from './waitable-consumer-if-error-transformer';
+export * from './logging.js';
+export * from './waitable-consumer-if-error-transformer.js';

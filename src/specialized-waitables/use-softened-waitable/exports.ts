@@ -1,2 +1,2 @@
-export * from './types';
-export * from './use-softened-waitable';
+export * from './types.js';
+export * from './use-softened-waitable.js';

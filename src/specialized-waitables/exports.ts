@@ -1,3 +1,3 @@
-export * from './use-derived-waitable/exports';
-export * from './use-softened-waitable/exports';
-export * from './use-waitable-function';
+export * from './use-derived-waitable/exports.js';
+export * from './use-softened-waitable/exports.js';
+export * from './use-waitable-function.js';

@@ -1,1 +1,1 @@
-export * from './WaitablesConsumer/exports';
+export * from './WaitablesConsumer/exports.js';

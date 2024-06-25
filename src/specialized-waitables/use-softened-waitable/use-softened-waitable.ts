@@ -1,9 +1,9 @@
 import { useRef } from 'react';
 import type { EmptyObject } from 'react-bindings';
 
-import { concatArrays, normalizeAsOptionalArray } from '../../internal-utils/array-like';
+import { concatArrays, normalizeAsOptionalArray } from '../../internal-utils/array-like.js';
 import type { Waitable } from '../../waitable/types/waitable';
-import { useDerivedWaitable } from '../use-derived-waitable/use-derived-waitable';
+import { useDerivedWaitable } from '../use-derived-waitable/use-derived-waitable.js';
 import type { UseSoftenedWaitableArgs } from './types';
 
 /**

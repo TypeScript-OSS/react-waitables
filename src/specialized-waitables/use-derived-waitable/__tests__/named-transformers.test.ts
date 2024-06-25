@@ -1,18 +1,18 @@
 import { waitFor } from '@testing-library/react';
 
-import { runInDom } from '../../../__test_dependency__';
-import { useWaitableFunction } from '../../use-waitable-function';
-import { useDerivedWaitable } from '../use-derived-waitable';
+import { runInDom } from '../../../__test_dependency__/index.js';
+import { useWaitableFunction } from '../../use-waitable-function.js';
+import { useDerivedWaitable } from '../use-derived-waitable.js';
 
 describe('useDerivedWaitable', () => {
-  it('with named ifLoaded tranformer', () =>
+  it('with named ifLoaded transformer', () =>
     runInDom(() => {
       const a = useDerivedWaitable(undefined, { ifLoaded: () => 1 }, { id: 'c' });
 
       expect(a.value.get()).toBe(1);
     }));
 
-  it('with named ifError tranformer', () =>
+  it('with named ifError transformer', () =>
     runInDom(({ onMount }) => {
       const a = useDerivedWaitable(
         useWaitableFunction(() => ({ ok: false, value: 'error' }), { id: 'test' }),

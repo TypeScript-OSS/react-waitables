@@ -1,7 +1,7 @@
 import { useBinding } from 'react-bindings';
 
-import { runInDom } from '../../../__test_dependency__';
-import { areAnyBindingsFalsey } from '../are-any-bindings-falsey';
+import { runInDom } from '../../../__test_dependency__/index.js';
+import { areAnyBindingsFalsey } from '../are-any-bindings-falsey.js';
 
 describe('areAnyBindingsFalsey', () => {
   it('should return false if all bindings have truthy values', () =>

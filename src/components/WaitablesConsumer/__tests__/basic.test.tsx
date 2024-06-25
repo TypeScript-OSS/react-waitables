@@ -2,10 +2,10 @@ import { waitFor } from '@testing-library/react';
 import React from 'react';
 import { useBinding } from 'react-bindings';
 
-import { runInDom, sleep } from '../../../__test_dependency__';
-import { useDerivedWaitable } from '../../../specialized-waitables/use-derived-waitable/use-derived-waitable';
-import { useWaitableFunction } from '../../../specialized-waitables/use-waitable-function';
-import { WaitablesConsumer } from '../WaitablesConsumer';
+import { runInDom, sleep } from '../../../__test_dependency__/index.js';
+import { useDerivedWaitable } from '../../../specialized-waitables/use-derived-waitable/use-derived-waitable.js';
+import { useWaitableFunction } from '../../../specialized-waitables/use-waitable-function.js';
+import { WaitablesConsumer } from '../WaitablesConsumer.js';
 
 describe('WaitablesConsumer', () => {
   it('should work with undefined dependencies', () =>

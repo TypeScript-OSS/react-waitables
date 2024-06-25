@@ -1,7 +1,7 @@
 import { jest } from '@jest/globals';
 
-import { sleep } from '../../__test_dependency__';
-import { makeValueWithArgsThenDo } from '../make-value-with-args-then-do';
+import { sleep } from '../../__test_dependency__/index.js';
+import { makeValueWithArgsThenDo } from '../make-value-with-args-then-do.js';
 
 describe('makeValueWithArgsThenDo', () => {
   describe('synchronous makeValue functions', () => {

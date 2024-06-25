@@ -11,20 +11,20 @@ import {
   useTransientDerivedBinding
 } from 'react-bindings';
 
-import type { WrappedResult } from '..';
-import { isSpecialLoggingEnabledFor } from '../config/logging';
-import { useIsMountedRef } from '../internal-hooks/use-is-mounted-ref';
-import { normalizeAsArray } from '../internal-utils/array-like';
-import { getTypedKeys } from '../internal-utils/get-typed-keys';
+import { isSpecialLoggingEnabledFor } from '../config/logging.js';
+import { useIsMountedRef } from '../internal-hooks/use-is-mounted-ref.js';
+import { normalizeAsArray } from '../internal-utils/array-like.js';
+import { getTypedKeys } from '../internal-utils/get-typed-keys.js';
 import type { ResetType } from '../waitable/types/reset';
 import type { Waitable } from '../waitable/types/waitable';
-import { areAnyBindingsFalsey } from './internal/are-any-bindings-falsey';
-import { areAnyBindingsTruthy } from './internal/are-any-bindings-truthy';
-import { doSpecialLoggingForLockedWaitable, doSpecialLoggingForUnlockedWaitable } from './internal/special-logging';
-import { updateWaitableBindingsWithDefaultValueProducer } from './internal/update-waitable-bindings-with-default-value-producer';
-import { updateWaitableBindingsWithPrimaryFunction } from './internal/update-waitable-bindings-with-primary-function';
-import { updateWaitableBindingsWithPrimaryFunctionForDefaultValue } from './internal/update-waitable-bindings-with-primary-function-for-default-value';
-import { waitForBindingValues } from './internal/wait-for-binding-values';
+import type { WrappedResult } from '../waitable/types/wrapped-result.js';
+import { areAnyBindingsFalsey } from './internal/are-any-bindings-falsey.js';
+import { areAnyBindingsTruthy } from './internal/are-any-bindings-truthy.js';
+import { doSpecialLoggingForLockedWaitable, doSpecialLoggingForUnlockedWaitable } from './internal/special-logging.js';
+import { updateWaitableBindingsWithDefaultValueProducer } from './internal/update-waitable-bindings-with-default-value-producer.js';
+import { updateWaitableBindingsWithPrimaryFunction } from './internal/update-waitable-bindings-with-primary-function.js';
+import { updateWaitableBindingsWithPrimaryFunctionForDefaultValue } from './internal/update-waitable-bindings-with-primary-function-for-default-value.js';
+import { waitForBindingValues } from './internal/wait-for-binding-values.js';
 import type { UseWaitableArgs } from './types/args';
 import type { WaitablePrimaryFunction } from './types/primary-function';
 
@@ -316,8 +316,7 @@ export const useWaitable = <SuccessT, FailureT = any, ExtraFieldsT extends objec
   const extraFields = addFields?.(output);
   if (extraFields !== undefined) {
     for (const key of getTypedKeys(extraFields)) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      output[key as keyof ExtraFieldsT] = extraFields[key] as any;
+      output[key] = extraFields[key] as (typeof output)[typeof key];
     }
   }
 

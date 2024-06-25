@@ -3,12 +3,12 @@ import React from 'react';
 import type { SingleOrArray } from 'react-bindings';
 import { BindingsConsumer, pickLimiterOptions, useCallbackRef } from 'react-bindings';
 
-import { getDefaultWaitablesConsumerIfErrorTransformer } from '../../config/waitable-consumer-if-error-transformer';
-import { normalizeAsArray } from '../../internal-utils/array-like';
-import { useDerivedWaitable } from '../../specialized-waitables/use-derived-waitable/use-derived-waitable';
+import { getDefaultWaitablesConsumerIfErrorTransformer } from '../../config/waitable-consumer-if-error-transformer.js';
+import { normalizeAsArray } from '../../internal-utils/array-like.js';
+import { useDerivedWaitable } from '../../specialized-waitables/use-derived-waitable/use-derived-waitable.js';
 import type { Waitable } from '../../waitable/types/waitable';
 import type { WaitableDependencies } from '../../waitable/types/waitable-dependencies';
-import { pickWaitablesConsumerNamedTransformers } from './pick-waitables-consumer-named-transformers';
+import { pickWaitablesConsumerNamedTransformers } from './pick-waitables-consumer-named-transformers.js';
 import type { WaitablesConsumerProps } from './types/props';
 import type { WaitablesConsumerNamedTransformers, WaitablesConsumerRequiredValuesTransformer } from './types/transformers';
 

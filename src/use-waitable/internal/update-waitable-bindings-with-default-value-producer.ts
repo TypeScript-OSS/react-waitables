@@ -1,7 +1,7 @@
 import isPromise from 'is-promise';
 import type { Binding } from 'react-bindings';
 
-import { makeValueThenDo } from '../../internal-utils/make-value-then-do';
+import { makeValueThenDo } from '../../internal-utils/make-value-then-do.js';
 import type { TypeOrPromisedType } from '../../resolveable/types';
 import type { UseWaitableDefaultValueProducer } from '../types/args';
 

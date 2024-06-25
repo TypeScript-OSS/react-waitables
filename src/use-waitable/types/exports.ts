@@ -1,2 +1,2 @@
-export * from './args';
-export * from './primary-function';
+export * from './args.js';
+export * from './primary-function.js';

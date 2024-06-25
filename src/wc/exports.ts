@@ -1,1 +1,1 @@
-export * from './wc';
+export * from './wc.js';
