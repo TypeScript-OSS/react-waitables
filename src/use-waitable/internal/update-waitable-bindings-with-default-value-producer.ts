@@ -78,7 +78,7 @@ export const updateWaitableBindingsWithDefaultValueProducer = <SuccessT, Failure
       // Ignoring errors caused by defaultValue functions -- we want to be able to call defaultValue functions even while locked
       return possiblePromise.catch(() => {});
     }
-  } catch (e) {
+  } catch (_e) {
     // Ignoring errors caused by defaultValue functions -- we want to be able to call defaultValue functions even while locked
   }
 };

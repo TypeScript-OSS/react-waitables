@@ -1,6 +1,6 @@
 {
   "name": "react-waitables",
-  "version": "2.3.2",
+  "version": "2.3.3",
   "description": "Async data bindings for React",
   "keywords": [
     "async",

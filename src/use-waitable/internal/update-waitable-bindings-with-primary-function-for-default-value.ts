@@ -102,7 +102,7 @@ export const updateWaitableBindingsWithPrimaryFunctionForDefaultValue = <Success
 
       return possiblePromise.catch(softReset);
     }
-  } catch (e) {
+  } catch (_e) {
     softReset();
   }
 };
