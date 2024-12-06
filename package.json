@@ -1,6 +1,6 @@
 {
   "name": "react-waitables",
-  "version": "2.3.7",
+  "version": "2.3.8",
   "description": "Async data bindings for React",
   "keywords": [
     "async",
@@ -42,7 +42,7 @@
   "dependencies": {
     "client-run-queue": "^2.3.9",
     "is-promise": "^4.0.0",
-    "react-bindings": "^1.19.5"
+    "react-bindings": "^1.19.6"
   },
   "devDependencies": {
     "@eslint/compat": "1.2.4",

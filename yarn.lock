@@ -1697,7 +1697,7 @@ cli-spinners@^2.5.0:
   resolved "https://registry.yarnpkg.com/cli-spinners/-/cli-spinners-2.9.2.tgz#1773a8f4b9c4d6ac31563df53b3fc1d79462fe41"
   integrity sha512-ywqV+5MmyL4E7ybXgKys4DugZbX0FC6LnwrhjuykIjnK9k8OQacQ7axGKnjDXWNhns0xot3bZI5h55H8yo9cJg==
 
-client-run-queue@^2.3.3, client-run-queue@^2.3.9:
+client-run-queue@^2.3.9:
   version "2.3.9"
   resolved "https://registry.yarnpkg.com/client-run-queue/-/client-run-queue-2.3.9.tgz#39a66b870c5f12cf345f84c1aaaa6accdbfde0b1"
   integrity sha512-yJ3QkwalBdhV99phz8cbEb/gDsIVQHLl7GkprwP45YmuwHDDs5708/I3x8TlYf7o7ga1h173fmEiLl81qgpGUg==
@@ -2057,7 +2057,7 @@ domexception@^4.0.0:
   dependencies:
     webidl-conversions "^7.0.0"
 
-doublell@^1.0.5, doublell@^1.1.4:
+doublell@^1.1.4:
   version "1.1.4"
   resolved "https://registry.yarnpkg.com/doublell/-/doublell-1.1.4.tgz#5da96807a1e8db33a090109881a20a70c293e0c8"
   integrity sha512-7bi20R/UIfpiekU+PXeFvtoIG5TPy3wYedcNuVy/3xykhqAhC3pfS+1c4IKGz+a+79KoU20BgvICln2FOF1rCg==
@@ -4647,13 +4647,13 @@ rc@^1.2.8:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
-react-bindings@^1.19.5:
-  version "1.19.5"
-  resolved "https://registry.yarnpkg.com/react-bindings/-/react-bindings-1.19.5.tgz#3a22b7a14de2dc01077ed7b374fe81497c497be9"
-  integrity sha512-MHcavAcRYUxuTeKwyD/q+A2aAbRi9xQl3GbSQgSyvBiGPZGIdrkFiSVxt2tOtWxIIk2rO8U8uQtE+UQ/h8EMmQ==
+react-bindings@^1.19.6:
+  version "1.19.6"
+  resolved "https://registry.yarnpkg.com/react-bindings/-/react-bindings-1.19.6.tgz#749b6f0c0b592c53e6623aa8310af03fdabcfa9f"
+  integrity sha512-7zXEWv/B4YkO/B9fMUcTionRmCQjSiRMGbTidEHf1+uQTKhxk9zBxiwLPmpX4ByD9+UgEl+54BiY1bA0dzfD0Q==
   dependencies:
-    client-run-queue "^2.3.3"
-    doublell "^1.0.5"
+    client-run-queue "^2.3.9"
+    doublell "^1.1.4"
     is-promise "^4.0.0"
     lodash "4.17.21"
     lodash-es "4.17.21"
